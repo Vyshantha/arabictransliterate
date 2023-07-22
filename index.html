@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">  
+    <title>Arabic Transliterator : الْعَرَبِيَّة </title>
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Arabic - الْعَرَبِيَّة Transliterator" />
+    <meta property="og:image"              content="Emblem_of_Saudi_Arabia.png" />
+    <meta property="og:description"        content=" Arabic Abjad الْأَبْجَدِيَّة الْعَرَبِيَّة  Algeria Bahrain Chad Comoros Djibouti Egypt Eritrea Iraq Jordan Kuwait Lebanon Libya Mauritania Morocco Oman Palestine Qatar Saudi Arabia Somalia Sudan Syria Tanzania Tunisia United Arab Emirates Yemen Arabi Malayalam  Ajami عجمي Hausa Yoruba Swahili  Aljamiado Old Spanish Mozarabic Ladino Aragonese Old Galician-Portuguese  Arebica آـرـەـبـٖٮڄآ Serbo-Croatian  Arwi Tamil  Balochi بلۏچی  Belarusian بَلاروُسقایا  Berber الابجدية  Burushaski بروشسکی  Chagatai چغتای  Galal Somali  İske imlâ Tatar  Jawi Malay  Kashmiri كٲشُر  Kazakh  Khowar  Kyrgyz  Ottoman Turkish  Pashto پښتو  Pegon ڤَيڮَون Javanese Sundanese  Persian Farsi فارسی  Saraiki سرائیکی  Shahmukhi شاہ مُکھی Punjabi  Sindhi سِنڌِي  Sorabe سُرَبِ Malagasy  Central Kurdish Sorani  Urdu اردو  Uyghur ئۇيغۇر  Wolofal Wolof وࣷلࣷفْ لࣵکّ   Xiao'erjing  Xiaojing Sinitic  Yaña imlâ ياڭا ئيملە " data-qmeta="keywords">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="Emblem_of_Saudi_Arabia.png">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Noto Naskh Arabic' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Noto Kufi Arabic' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Noto Nastaliq Urdu' rel='stylesheet'>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <table class="tab">
+          <tr>
+            <td class="widthOfTab ">
+              <button class="tablinks" onclick="openTab(event, 'Latin')" id="defaultOpen">Arabic</button>
+            </td>
+            <td class="widthOfTab textArabic alignIcon">
+              <span class="tablinks arabicTab">الْعَرَبِيَّة</span>
+            </td>
+          </tr>
+        </table>
+        <div class="text-input">
+          <div id="Latin" class="tabcontent currentTab" dir="ltr">
+            <textarea spellcheck="false" id="textarea1" class="from-text" placeholder="Arabic (Latin)  
+
+            Yūladu jamī'u n-nāsi aḥrāran mutasāwīna fī l-karāmati wa-l-ḥuqūq. Wa-qad wuhibū 'aqlan wa-ḍamīran wa-'alayhim an yu'āmila ba'ḍuhum ba'ḍan bi-rūḥi l-ikhā'" onkeyup="transliterate()"></textarea>
+          </div>
+          <div id="Arabic" class="arabicTabText" dir="rtl">
+            <textarea spellcheck="false" id="textarea2" readonly class="to-text" placeholder="الْعَرَبِيَّة 
+
+            يولدو جامو ناصي عيران متسونة في الكراماتي والحقوق. وقاد وهبة عقلان وحمران وعليهم أنعاملة بأحوم باعان بالري للإخاء" dir="rtl" onkeyup="transliterate()"></textarea>
+          </div>
+        </div>
+        <ul class="controls">
+          <li class="row from">
+            <div class="icons tooltip" onmousedown="show1()">
+              <i id="from" class="fas fa-copy" onclick="copyContent1()"></i>
+              <div id="tooltip1" onmouseout="hide()" class="tooltiptext">
+                <span class="latinCopyText">Copy Transliteration text - Arabic</span>
+              </div>
+            </div>
+          </li>
+          <li class="exchange">
+            <i class="fas fa-exchange-alt" onclick="swapTransliteration()"></i>
+          </li>
+          <li class="row to">
+            <div class="arabicFonts">
+              <img src="Naskh.png" title="Naskh font type" alt="Naskh font type" width="30px" height="30x" onclick="loadNaskh()"/>
+              <img src="Kufi.png" title="Kufi font type" alt="Kufi font type" width="30px" height="30x" onclick="loadKufi()"/>
+              <img src="Nastaliq.png" title="Nastaliq font type" alt="Nastaliq font type" width="30px" height="30x" onclick="loadNastaliq()"/>
+            </div>
+            <div class="icons tooltip" onmousedown="show2()">
+              <i id="to" class="fas fa-copy" onclick="copyContent2()"></i>
+              <div id="tooltip2" onmouseout="hide()" class="tooltiptext">
+                <span class="textArabic">نسخ النص باللغة العربية</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <button onclick="transliterate()"><span class="footerLatin">Arabic</span> | <span class="footerArabic">الْعَرَبِيَّة</span></button>
+    </div>
+    
+    <div class="footerOfPage">
+      &nbsp;&nbsp;&nbsp;<img src="Flag_of_Saudi_Arabia.png" alt="देवनागरी - World Scripts Explorer" class="footerImage" height="19px" width="32px"/>&nbsp;&nbsp;&nbsp;<a href="https://worldscriptsexplorer.page/ar" target="_blank">الْعَرَبِيَّة</a>&nbsp;&nbsp;&nbsp;2023 yshant&nbsp;&nbsp;&nbsp;
+    </div>
+    <script src="transliterate.js"></script>
+  </body>
+</html>

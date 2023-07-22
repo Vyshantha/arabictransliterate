@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  min-height: 100vh;
+  background: #918578;
+}
+.container{
+  max-width: 750px;
+  width: 100%;
+  padding: 30px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.01);
+}
+.wrapper{
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.wrapper .text-input{
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.text-input .to-text{
+  border-radius: 0px;
+  border-left: 1px solid #ccc;
+  font-size: 18px;
+}
+.text-input textarea{
+  height: 250px;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: none;
+  font-size: 15px;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+.text-input textarea::placeholder{
+  color: #b7b6b6;
+}
+.controls, li, .icons, .icons i{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.controls{
+  list-style: none;
+  padding: 12px 15px;
+}
+.controls .row .icons i{
+  width: 50px;
+  color: #adadad;
+  font-size: 25px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  justify-content: center;
+}
+.controls .row.from .icons{
+  padding-right: 15px;
+  border-right: 1px solid #ccc;
+}
+.controls .row.to .icons{
+  padding-left: 15px;
+  border-left: 1px solid #ccc;
+}
+.controls .row select{
+  color: #333;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  background: none;
+  padding-left: 5px;
+}
+.text-input textarea::-webkit-scrollbar{
+  width: 4px;
+}
+.controls .row select::-webkit-scrollbar{
+  width: 8px;
+}
+.text-input textarea::-webkit-scrollbar-track,
+.controls .row select::-webkit-scrollbar-track{
+  background: #fff;
+}
+.text-input textarea::-webkit-scrollbar-thumb{
+  background: #ddd;
+  border-radius: 8px;
+}
+.controls .row select::-webkit-scrollbar-thumb{
+  background: #999;
+  border-radius: 8px;
+  border-right: 2px solid #ffffff;
+}
+.controls .exchange{
+  color: #adadad;
+  cursor: pointer;
+  font-size: 30px;
+  transition: transform 0.2s ease;
+}
+.controls i:active{
+  transform: scale(0.9);
+}
+.container button{
+  width: 100%;
+  padding: 14px;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 17px;
+  border-radius: 5px;
+  background: #a85a00;
+}
+.arabicFonts {
+  cursor: pointer;
+}
+.arabicFonts:hover {
+  cursor: pointer;
+}
+.textNaskh {
+  font-family: 'Noto Naskh Arabic';
+}
+.textKufi {
+  font-family: 'Noto Kufi Arabic';
+}
+.textNastaliq {
+  font-family: 'Noto Nastaliq Urdu';
+}
+.textArabic{
+  font-size: 0.8em;
+  width: 60%;
+}
+.arabicTab {
+  font-size: 2em;
+}
+.arabicTabSmallScreen {
+  width: 100% !important;
+}
+.arabicTabText {
+  width: 50%;
+}
+.latinCopyText {
+  font-size: 0.7em;
+}
+.footerArabic {
+  font-size: 1.2em;
+}
+.footerLatin {
+  font-size: 1em;
+}
+.footerImage {
+  margin-bottom: -7px;
+}
+
+@media (max-width: 660px){
+  .container{
+    padding: 20px;
+  }
+  .wrapper .text-input{
+    flex-direction: column;
+  }
+  .text-input .to-text{
+    border-left: 0px;
+    border-top: 1px solid #ccc;
+  }
+  .text-input textarea{
+    height: 200px;
+  }
+  .controls .row .icons{
+    font-size: 20px;
+  }
+  .container button{
+    padding: 13px;
+    font-size: 16px;
+  }
+  .controls .row select{
+    font-size: 16px;
+  }
+  .controls .exchange{
+    font-size: 20px;
+  }
+  .textArabic{
+    font-size: large;
+    width: 20%;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.tooltip:hover {
+   cursor: pointer;
+}
+.close {
+  color: red;
+}
+.close:hover {
+  cursor: pointer;
+}
+.tooltip .tooltiptext {
+  display: none;
+  width: 180px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.block {
+  display: block !important;
+}
+
+/* Style the tab */
+.tab {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: grey;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 2px;
+  margin: 2px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  cursor: pointer;
+  /*background-color: #ccc;*/
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 50%;
+}
+
+.tabcontentSmallScreen {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 100% !important;
+}
+
+.currentTab {
+  border: 2px solid black;
+  width: 50%;
+}
+
+.widthOfTab {
+  width: 50%;
+}
+
+.alignIcon {
+  text-align: center;
+}
+
+.footerOfPage { 
+  text-align: center;
+  position: fixed; 
+  bottom: 10px; 
+  font-size: 10px;
+  padding: 15px;
+}
