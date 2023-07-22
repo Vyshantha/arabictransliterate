@@ -108,6 +108,12 @@ body{
   transition: transform 0.2s ease;
   padding-left: 100px;
 }
+.exchangeSmallScreen{
+  color: #adadad;
+  cursor: pointer;
+  font-size: 30px;
+  transition: transform 0.2s ease;
+}
 .controls i:active{
   transform: scale(0.9);
 }
