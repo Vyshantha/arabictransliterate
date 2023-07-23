@@ -9,6 +9,13 @@ The transliteration adheres to [DIN 31635](https://en.wikipedia.org/wiki/DIN_316
 
 The Arabic spoken & written in ```Algeria, Bahrain, Chad, Comoros, Djibouti, Egypt, Eritrea, Iraq, Jordan, Kuwait, Lebanon, Libya, Mauritania, Morocco, Oman, Palestine, Qatar, Saudi Arabia, Somalia, Sudan, Syria, Tanzania, Tunisia, United Arab Emirates and Yemen``` and as well as the texts in ```Arabi Malayalam, Ajami عجمي for Hausa Yoruba Swahili, Aljamiado for Old Spanish Mozarabic Ladino Aragonese Old Galician-Portuguese, Arebica آـرـەـبـٖٮڄآ for Serbo-Croatian, Arwi Tamil, Balochi بلۏچی , Belarusian بَلاروُسقایا , Berber الابجدية , Burushaski بروشسکی , Chagatai چغتای , Galal for Somali , İske imlâ for Tatar , Jawi for Malay , Kashmiri كٲشُر , Kazakh , Khowar , Kyrgyz , Ottoman Turkish , Pashto پښتو , Pegon ڤَيڮَون for Javanese Sundanese , Persian Farsi فارسی , Saraiki سرائیکی , Shahmukhi شاہ مُکھی for Punjabi , Sindhi سِنڌِي , Sorabe سُرَبِ for Malagasy , Central Kurdish Sorani , Urdu اردو , Uyghur ئۇيغۇر , Wolofal for Wolof وࣷلࣷفْ لࣵکّ  , Xiao'erjing  Xiaojing for Sinitic , Yaña imlâ ياڭا ئيملە ``` written using Arabic الْعَرَبِيَّة are supported with this application.
 
+- To change the transliteration direction i.e. to switch between Latin or Arabic, click the swap icon  <img src="./swap-horiz-64.png" width="40px" height="40px" />  
+- To copy the contents of the either Latin or Arabic text areas click the copy content icon  <img src="./content-copy-64.png" width="40px" height="40px" /> 
+- To use the Naskh Arabic font style, click the icon <img src="./Naskh.png" width="40px" height="40px" />
+- To use the Kufi Arabic font style, click the icon <img src="./Kufi.png" width="40px" height="40px" />
+- To use the Nastaliq Urdu font style, click the icon <img src="./Nastaliq.png" width="40px" height="40px" />
+
+
 The application is yet to be perfected - "Work In Progress!" 
 
   <img src="https://github.com/Vyshantha/multiscripteditor/blob/main/editorClient/src/assets/images/keyboard_to_construct.png" data-canonical-src="https://github.com/Vyshantha/multiscripteditor/blob/main/editorClient/src/assets/images/keyboard_to_construct.png" width="100" height="80" />
