@@ -194,6 +194,43 @@ function swap(json) {
   */
 }
 
+function typeOfTransliterate(type) {
+  if (type == 'IJMES') {
+    localStorage.setItem("transliterateType", "IJMES");
+    document.getElementById("clickIJMES").classList.add('currentEncoding');
+    document.getElementById("clickDIN").classList.remove('currentEncoding');
+    localStorage.setItem("languageType","ARABIC");
+    transliterate();
+  } else if (type == 'DIN') {
+    localStorage.setItem("transliterateType", "DIN");
+    document.getElementById("clickDIN").classList.add('currentEncoding');
+    document.getElementById("clickIJMES").classList.remove('currentEncoding');
+    transliterate();
+  } else if (localStorage.getItem("transliterateType") == "" || localStorage.getItem("transliterateType") == undefined || localStorage.getItem("transliterateType") == null) {
+    localStorage.setItem("transliterateType", "IJMES");
+    document.getElementById("clickDIN").classList.remove('currentEncoding');
+    document.getElementById("clickIJMES").classList.add('currentEncoding');
+    localStorage.setItem("languageType","ARABIC");
+    transliterate();
+  }
+}
+
+function typeOfLanguage(type) {
+  if (type == 'ARABIC') {
+    localStorage.setItem("languageType","ARABIC");
+    document.getElementById('defaultOpen').innerHTML = 'Arabic';
+  } else if (type == 'PERSIAN') {
+    localStorage.setItem("languageType","PERSIAN");
+    document.getElementById('defaultOpen').innerHTML = 'Persian';
+  } else if (type == 'OTTOMAN-TURKISH') {
+    localStorage.setItem("languageType","OTTOMAN-TURKISH");
+    document.getElementById('defaultOpen').innerHTML = 'Ottoman Turkish';
+  } else if (type == 'MODERN-TURKISH') {
+    localStorage.setItem("languageType","MODERN-TURKISH");
+    document.getElementById('defaultOpen').innerHTML = 'Modern Turkish';
+  }
+}
+
 function openTab(evt, localeName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -238,8 +275,19 @@ if (localStorage.getItem("direction") == null || localStorage.getItem("direction
   localStorage.setItem("direction", "latin2arabic");
   localStorage.setItem("encoding", "Latin");
   localStorage.setItem("transliterateType", "IJMES");
+  localStorage.setItem("languageType","ARABIC");
 } else if (localStorage.getItem("direction") != "arabic2latin" && localStorage.getItem("direction") != "latin2arabic") {
   localStorage.clear();
+}
+
+if (localStorage.getItem("transliterateType") == "" || localStorage.getItem("transliterateType") == undefined || localStorage.getItem("transliterateType") == null || localStorage.getItem("transliterateType") == "IJMES") {
+  localStorage.setItem("transliterateType", "IJMES");
+  document.getElementById("clickIJMES").classList.add('currentEncoding');
+  document.getElementById("clickDIN").classList.remove('currentEncoding');
+  localStorage.setItem("languageType","ARABIC");
+} else {
+  document.getElementById("clickDIN").classList.add('currentEncoding');
+  document.getElementById("clickIJMES").classList.remove('currentEncoding');
 }
 
 if (screen.width >= 300 && screen.width <= 500) {
