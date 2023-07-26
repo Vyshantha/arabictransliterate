@@ -70,22 +70,22 @@ function transliterate() {
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
     let latinToArabic;
     let vowels;
-    if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageUsed") == "Arabic") {
+    if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Arabic") {
       const ijmesArabic = {"0":"٠","1":"١","2":"٢","3":"٣","4":"٤","5":"٥","6":"٦","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","-":"-","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","t":"ت","T":"ت","th":"ٽ","Th":"ٽ","j":"ج","J":"ج","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","dh":"ذ","Dh":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ḍ":"ض","Ḍ":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","w":"و","W":"و","y":"ي","Y":"ي","a":"ة","al":"ال","la":"ﻻ","la":"ﻼ"};
       vowels = {"ā":"ا","Ā":"ا","ā":"ای","Ā":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":" ّي-ِ","Iyy":" ّي-ِ","ī":" ّي-ِ","Ī":" ّي-ِ","uvv":"و-ُ","Uvv":"و-ُ","ū":"و-ُ","Ū":"و-ُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","a":"-َ","A":"-َ","u":"-ُ","U":"-ُ","i":"-ِ","I":"-ِ"}
       latinToArabic = ijmesArabic;
-    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageUsed") == "Persian") {
+    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Persian") {
       const ijmesPersian = {"0":"۰","1":"١","2":"٢","3":"٣","4":"۴","5":"۵","6":"۶","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","-":"-","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","p":"ﭗ","P":"ﭗ","t":"ت","T":"ت","s̲":"ٽ","S̲":"ٽ","j":"ج","J":"ج","ch":"چ","Ch":"چ","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","z̲":"ذ","Z̲":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","zh":"ژ","Zh":"ژ","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ż":"ض","Ż":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","g":"ك","G":"ك","g":"گ","G":"گ","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","v":"و","V":"و","U":"و","U":"و","y":"ي","Y":"ي"};
       vowels = {"ā":"ا","Ā":"ا","ā":"ای","Ā":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":" ّي-ِ","Iyy":" ّي-ِ","ī":" ّي-ِ","Ī":" ّي-ِ","uvv":"و-ُ","Uvv":"و-ُ","ū":"و-ُ","Ū":"و-ُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","a":"-َ","A":"-َ","u":"-ُ","U":"-ُ","i":"-ِ","I":"-ِ"}
       latinToArabic = ijmesPersian;
-    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageUsed") == "OttomanTurkish") {
+    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "OttomanTurkish") {
       const ijmesOttomanTurkish = {"0":"٠","1":"١","2":"٢","3":"٣","4":"٤","5":"٥","6":"٦","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","-":"-","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","p":"ﭗ","P":"ﭗ","t":"ت","T":"ت","s̲":"ٽ","S̲":"ٽ","c":"ج","C":"ج","ç":"چ","Ç":"چ","ḥ":"ح","Ḥ":"ح","h":"خ","H":"خ","d":"د","D":"د","z̲":"ذ","Z̲":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","j":"ژ","J":"ژ","s":"س","S":"س","ş":"ش","Ş":"ش","ṣ":"ص","Ṣ":"ص","ż":"ض","Ż":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","g":"غ","G":"غ","ğ":"غ","Ğ":"غ","f":"ف","F":"ف","ḳ":"ق","Ḳ":"ق","k":"ك","K":"ك","ñ":"ك","Ñ":"ك","ğ":"ك","Ğ":"ك","y":"ك","Y":"ك","g":"گ","G":"گ","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","v":"و","V":"و","y":"ي","Y":"ي"};
       vowels = {"ā":"ا","Ā":"ا","ā":"ای","Ā":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iy":" ّي-ِ","Iy":" ّي-ِ","ī":" ّي-ِ","Ī":" ّي-ِ","uvv":"و-ُ","Uvv":"و-ُ","ev":"وَ","Ev":"وَ","ey":"یَ","Ey":"یَ","a":"-َ","A":"-َ","e":"-َ","E":"-َ","u":"-ُ","U":"-ُ","ü":"-ُ","Ü":"-ُ","o":"-ُ","O":"-ُ","ö":"-ُ","Ö":"-ُ","i":"-ِ","I":"-ِ","ı":"-ِ","I":"-ِ"}
       latinToArabic = ijmesOttomanTurkish;
-    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageUsed") == "ModernTurkish") {
+    } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "ModernTurkish") {
       const ijmesModernTurkish = {"0":"٠","1":"١","2":"٢","3":"٣","4":"٤","5":"٥","6":"٦","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","-":"-","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","p":"ﭗ","b":"ﭗ","P":"ﭗ","B":"ﭗ","t":"ت","T":"ت","s":"ٽ","S":"ٽ","c":"ج","C":"ج","ç":"چ","Ç":"چ","ḥ":"ح","Ḥ":"ح","h":"خ","H":"خ","d":"د","D":"د","z":"ذ","Z":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","j":"ژ","J":"ژ","s":"س","S":"س","ş":"ش","Ş":"ش","s":"ص","S":"ص","z":"ض","Z":"ض","t":"ط","T":"ط","z":"ظ","Z":"ظ","ġ":"غ","ġ":"غ","ğ":"غ","Ğ":"غ","f":"ف","F":"ف","k":"ق","K":"ق","k":"ك","K":"ك","ñ":"ك","Ñ":"ك","ğ":"ك","Ğ":"ك","y":"ك","Y":"ك","g":"گ","G":"گ","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","v":"و","V":"و","y":"ي","Y":"ي"};
       vowels = {"ā":"ا","Ā":"ا","ā":"ای","Ā":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iy":" ّي-ِ","Iy":" ّي-ِ","ī":" ّي-ِ","Ī":" ّي-ِ","uvv":"و-ُ","Uvv":"و-ُ","ev":"وَ","Ev":"وَ","ey":"یَ","Ey":"یَ","a":"-َ","A":"-َ","e":"-َ","E":"-َ","u":"-ُ","U":"-ُ","ü":"-ُ","Ü":"-ُ","o":"-ُ","O":"-ُ","ö":"-ُ","Ö":"-ُ","i":"-ِ","I":"-ِ","ı":"-ِ","I":"-ِ"}
@@ -199,7 +199,7 @@ function typeOfTransliterate(type) {
     localStorage.setItem("transliterateType", "IJMES");
     document.getElementById("clickIJMES").classList.add('currentEncoding');
     document.getElementById("clickDIN").classList.remove('currentEncoding');
-    localStorage.setItem("languageType","ARABIC");
+    localStorage.setItem("languageType","Arabic");
     transliterate();
   } else if (type == 'DIN') {
     localStorage.setItem("transliterateType", "DIN");
@@ -210,24 +210,24 @@ function typeOfTransliterate(type) {
     localStorage.setItem("transliterateType", "IJMES");
     document.getElementById("clickDIN").classList.remove('currentEncoding');
     document.getElementById("clickIJMES").classList.add('currentEncoding');
-    localStorage.setItem("languageType","ARABIC");
+    localStorage.setItem("languageType","Arabic");
     transliterate();
   }
 }
 
 function typeOfLanguage(type) {
-  if (type == 'ARABIC') {
-    localStorage.setItem("languageType","ARABIC");
+  if (type == 'Arabic') {
+    localStorage.setItem("languageType","Arabic");
     document.getElementById('defaultOpen').innerHTML = 'Arabic';
-  } else if (type == 'PERSIAN') {
-    localStorage.setItem("languageType","PERSIAN");
+  } else if (type == 'Persian') {
+    localStorage.setItem("languageType","Persian");
     document.getElementById('defaultOpen').innerHTML = 'Persian';
-  } else if (type == 'OTTOMAN-TURKISH') {
-    localStorage.setItem("languageType","OTTOMAN-TURKISH");
-    document.getElementById('defaultOpen').innerHTML = 'Ottoman Turkish';
-  } else if (type == 'MODERN-TURKISH') {
-    localStorage.setItem("languageType","MODERN-TURKISH");
-    document.getElementById('defaultOpen').innerHTML = 'Modern Turkish';
+  } else if (type == 'OttomanTurkish') {
+    localStorage.setItem("languageType","OttomanTurkish");
+    document.getElementById('defaultOpen').innerHTML = 'Ottoman-Turkish';
+  } else if (type == 'ModernTurkish') {
+    localStorage.setItem("languageType","ModernTurkish");
+    document.getElementById('defaultOpen').innerHTML = 'Modern-Turkish';
   }
 }
 
@@ -275,7 +275,7 @@ if (localStorage.getItem("direction") == null || localStorage.getItem("direction
   localStorage.setItem("direction", "latin2arabic");
   localStorage.setItem("encoding", "Latin");
   localStorage.setItem("transliterateType", "IJMES");
-  localStorage.setItem("languageType","ARABIC");
+  localStorage.setItem("languageType","Arabic");
 } else if (localStorage.getItem("direction") != "arabic2latin" && localStorage.getItem("direction") != "latin2arabic") {
   localStorage.clear();
 }
@@ -284,7 +284,7 @@ if (localStorage.getItem("transliterateType") == "" || localStorage.getItem("tra
   localStorage.setItem("transliterateType", "IJMES");
   document.getElementById("clickIJMES").classList.add('currentEncoding');
   document.getElementById("clickDIN").classList.remove('currentEncoding');
-  localStorage.setItem("languageType","ARABIC");
+  localStorage.setItem("languageType","Arabic");
 } else {
   document.getElementById("clickDIN").classList.add('currentEncoding');
   document.getElementById("clickIJMES").classList.remove('currentEncoding');
