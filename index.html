@@ -31,7 +31,7 @@
         </table>
         <div class="text-input">
           <div id="Latin" class="tabcontent currentTab" dir="ltr">
-            <textarea spellcheck="false" id="textarea1" class="from-text" placeholder="Arabic (Latin)  
+            <textarea spellcheck="false" id="textarea1" class="from-text" placeholder="Latin
 
             Yūladu jamī'u n-nāsi aḥrāran mutasāwīna fī l-karāmati wa-l-ḥuqūq. Wa-qad wuhibū 'aqlan wa-ḍamīran wa-'alayhim an yu'āmila ba'ḍuhum ba'ḍan bi-rūḥi l-ikhā'" onkeyup="transliterate()"></textarea>
           </div>
@@ -48,6 +48,19 @@
               <div id="tooltip1" onmouseout="hide()" class="tooltiptext">
                 <span class="latinCopyText">Copy Transliteration text - Arabic</span>
               </div>
+            </div>
+            <div class="dropdown">
+              <div class="dropbtn">🗣</div>
+              <div class="dropdown-content">
+                <img src="Flag_of_the_Arab_League.png" width="50px" height="40x" title="Langage Arabic | Sprache arabisch" onclick="typeOfLanguage('ARABIC')"/>
+                <img src="Flag_of_Iran.png" width="50px" height="40x" title="Langage Persian | Sprache persisch" onclick="typeOfLanguage('PERSIAN')"/>
+                <img src="Flag_Ottoman_Turkish.png" width="50px" height="40x" title="Langage Ottoman Turkish | Sprache Ottoman türkisch" onclick="typeOfLanguage('OTTOMAN-TURKISH')"/>
+                <img src="Flag_of_Turkey.png" width="50px" height="40x" title="Langage Modern Turkish | Sprache moderne türkisch" onclick="typeOfLanguage('MODERN-TURKISH')"/>
+              </div>
+            </div>
+            <div class="transliterateTypes">
+              <img title="IJMES Transliteration" id="clickIJMES" width="30px" height="30x" src="IJMES.png" onclick="typeOfTransliterate('IJMES')" />
+              <img title="DIN 31635 Transliteration" id="clickDIN" width="30px" height="30x" src="DIN.png" onclick="typeOfTransliterate('DIN')" />
             </div>
           </li>
           <li class="exchange" id="swapIcon">
