@@ -60,7 +60,7 @@ body{
 }
 .controls .row .icons i{
   width: 50px;
-  color: #736e6e;
+  color: #adadad;
   font-size: 25px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -102,11 +102,10 @@ body{
   border-right: 2px solid #ffffff;
 }
 .controls .exchange{
-  color: #736e6e;
+  color: #adadad;
   cursor: pointer;
   font-size: 30px;
   transition: transform 0.2s ease;
-  padding-left: 100px;
 }
 .exchangeSmallScreen{
   color: #adadad;
@@ -128,6 +127,12 @@ body{
   font-size: 17px;
   border-radius: 5px;
   background: #a85a00;
+}
+.transliterateTypes {
+  cursor: pointer;
+}
+.transliterateTypes:hover {
+  cursor: pointer;
 }
 .arabicFonts {
   cursor: pointer;
@@ -169,6 +174,48 @@ body{
 .footerImage {
   margin-bottom: -7px;
 }
+.currentEncoding {
+  border:2px solid #233d28;
+}
+
+.dropbtn {
+  background-color: #d3cbcb;
+  color: white;
+  padding: 2px;
+  font-size: 18px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #b6b1b1;
+  min-width: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: pointer;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 2px 5px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 @media (max-width: 660px){
   .container{
