@@ -313,7 +313,7 @@ function transliterate() {
     // TODO determine vocalised or unvocalised in text
     const textVocalisation = ["\uFE70","\uFE71","\uFE72","\uFE74","\u08F0","\u08F1","\u08F2","\u064C","\u064D","\u064B"," ࣰ","ࣱ","ࣲ","\u064E","\u0618","\uFE76","\uFE77","\u064F","\u0619","\uFE78","\uFE79","\u0650","\uFE7A","\uFE7B","\u061A","◌ٰ","◌ٖ"]; 
     // Fatha, Kasra, Damma : Normal, Small, Isolated, Medial forms included above
-    const shaddaForms = ["\uFC5E","\uFC60","\uFC61","\uFC62","\uFC63","\uFCF2","\uFCF3","\uFCF4","\uFC5F","ﹼ","\uFE7D"];
+    const shaddaForms = ["\uFC5E","\uFC60","\uFC61","\uFC62","\uFC63","\uFCF2","\uFCF3","\uFCF4","\uFC5F","\u0651","\uFE7D"];
     
     let resultLa = "";
     let textAr = document.getElementById("textarea2").value;
@@ -327,6 +327,8 @@ function transliterate() {
         resultLa = resultLa + diacritics[textAr[u]];
       } else if (textAr[u] && ligatures[textAr[u]]) {
         resultLa = resultLa + ligatures[textAr[u]];
+      } else if (textAr[u] && shaddaForms.indexOf(textAr[u]) > -1) {
+        resultLa = resultLa.slice(0, -1) + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; // Shadda rules
       } else if (((textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" != "" && textAr[u+2] == undefined)) && (arabicToLatin[textAr[u] + textAr[u-1]] || vowels[textAr[u] + textAr[u-1]])) { // Isolate double position 
         if (vowels[textAr[u] + textAr[u-1]]) {
           resultLa = resultLa.slice(0, -1) + vowels[textAr[u] + textAr[u-1]];  // Isolate double vowel position
