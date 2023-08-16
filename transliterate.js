@@ -334,8 +334,13 @@ function transliterate() {
         console.log("2. Ligature ", textAr[u], " : " , ligatures[textAr[u]] )
         resultLa = resultLa + ligatures[textAr[u]];
       } else if (textAr[u] && shaddaForms.indexOf(textAr[u]) > -1) {
-        console.log("3. Shadda ", textAr[u])
-        resultLa = resultLa.slice(0, -1) + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; // TODO Shadda rules
+        /* if (textVocalisation.indexOf(textAr[u-1]) > -1) {
+          console.log("3. Shadda final ", textAr[u] , textAr[u-1] , textVocalisation.indexOf(textAr[u-1]))
+          resultLa = resultLa + resultLa[resultLa.length - 1]; // TODO Shadda rules
+        } else { */
+          console.log("3. Shadda ", textAr[u])
+          resultLa = resultLa.slice(0, -1) + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; // TODO Shadda rules
+        //}
       } else if (((textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" != "" && textAr[u+2] == undefined)) && (arabicToLatin[textAr[u] + textAr[u-1]] || vowels[textAr[u] + textAr[u-1]])) { // Isolate double position 
         if (vowels[textAr[u] + textAr[u-1]]) {
           console.log("4. Isolate double vowel ", textAr[u] , " : ", textAr[u-1], " : ", vowels[textAr[u] + textAr[u-1]])
@@ -346,13 +351,13 @@ function transliterate() {
         }
       } else if (textAr[u+1] == " " && arabicToLatin[textAr[u] + textAr[u-1]]) { // Initial position with double character consonant
         console.log("5. Initial double consonant ", textAr[u] , " : ", textAr[u-1], " : ", arabicToLatin[textAr[u] + textAr[u-1]])
-        resultLa = resultLa.slice(0, -1) + arabicToLatin[textAr[u] + textAr[u-1]]; // TODO "ال":"al"
+        resultLa = resultLa.slice(0, -1) + arabicToLatin[textAr[u] + textAr[u-1]];
       } else if (textAr[u+1] == " " && vowels[textAr[u] + textAr[u-1]]) { // Initial position with double character vowel
         console.log("6. Initial double vowel ", textAr[u] , " : ", textAr[u-1], " : ", vowels[textAr[u] + textAr[u-1]])
         resultLa = resultLa.slice(0, -1) + vowels[textAr[u] + textAr[u-1]]; 
       } else if (textAr[u] && arabicToLatin[textAr[u] + textAr[u-1]]) { // Medial Position with double character consonant
         console.log("7. Medial double consonant ", textAr[u] , " : ", textAr[u-1], " : ", arabicToLatin[textAr[u] + textAr[u-1]])
-        resultLa = resultLa.slice(0, -1) + arabicToLatin[textAr[u] + textAr[u-1]]; // TODO "ال":"l"
+        resultLa = resultLa.slice(0, -1) + arabicToLatin[textAr[u] + textAr[u-1]];
       } else if (textAr[u] && vowels[textAr[u] + textAr[u-1]]) { // Medial Position with double character vowel
         console.log("8. Medial double vowel ", textAr[u] , " : ", textAr[u-1], " : ", vowels[textAr[u] + textAr[u-1]])
         resultLa = resultLa.slice(0, -1) + vowels[textAr[u] + textAr[u-1]];
@@ -411,18 +416,33 @@ function transliterate() {
         } else if (vowels[textAr[u]] == "a" && shaddaForms.indexOf(textAr[u-1]) > -1) {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ā";
+        } else if (vowels[textAr[u]] == "an" && vowels[textAr[u-1]] == "a") {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa.slice(0, -1) + "ān";
         } else if (vowels[textAr[u]] == "i" && vowels[textAr[u-1]] == "i") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ī";
-        } else if (vowels[textAr[u]] == "i" && textAr[u-1] == "ا") {  // Kasra under alef
+        } else if (vowels[textAr[u]] == "i" && vowels[textAr[u-1]] == "ʾi") {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa.slice(0, -2) + "ʾī";
+        }  else if (vowels[textAr[u]] == "i" && textAr[u-1] == "ا") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "i";
+        } else if (vowels[textAr[u]] == "in" && vowels[textAr[u-1]] == "i") {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa.slice(0, -1) + "īn";
         } else if (vowels[textAr[u]] == "u" && vowels[textAr[u-1]] == "u") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ū";
-        } else if (vowels[textAr[u]] == "u" && vowels[textAr[u-1]] == "ا") {  // Damma over alef
+        } else if (vowels[textAr[u]] == "u" && vowels[textAr[u-1]] == "ʾu") {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa.slice(0, -2) + "ʾū";
+        } else if (vowels[textAr[u]] == "u" && vowels[textAr[u-1]] == "ا") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ū";
+        } else if (vowels[textAr[u]] == "un" && vowels[textAr[u-1]] == "u") {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa.slice(0, -1) + "ūn";
         } else {
           resultLa = resultLa + vowels[textAr[u]];
         }
