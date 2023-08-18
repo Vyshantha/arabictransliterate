@@ -339,16 +339,26 @@ function transliterate() {
         console.log("2. Ligature ", textAr[u], " : " , ligatures[textAr[u]] )
         resultLa = resultLa + ligatures[textAr[u]];
       } else if (textAr[u] && shaddaForms.indexOf(textAr[u]) > -1) { // Shadda rules
-          console.log("3. Shadda ", textAr[u], vowels[textAr[u-1]], textVocalisation.indexOf(textAr[u-1]))
-          if (vowels[textAr[u-1]] == "a") {
+          if (vowels[textAr[u-1]] == "a" && !arabicToLatin[textAr[u-1]]) {
+            console.log("3. Shadda - a long ", textAr[u], vowels[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + "ā"; 
-          } else if (vowels[textAr[u-1]] == "i") {
+          } else if (vowels[textAr[u-1]] == "i" && !arabicToLatin[textAr[u-1]]) {
+            console.log("3. Shadda - i long ", textAr[u], vowels[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + "ī"; 
-          } else if (vowels[textAr[u-1]] == "u") {
+          } else if (vowels[textAr[u-1]] == "u" && !arabicToLatin[textAr[u-1]]) {
+            console.log("3. Shadda - u long ", textAr[u], vowels[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + "ū"; 
-          } else if (textVocalisation.indexOf(textAr[u-1]) > -1) {
+          } else if (textVocalisation.indexOf(textAr[u-1]) > -1 && !arabicToLatin[textAr[u-1]]) {
+            console.log("3. Shadda - vocalised ", textAr[u], textVocalisation.indexOf(textAr[u-1]))
             resultLa = resultLa + resultLa[resultLa.length - 1];
+          } else if (arabicToLatin[textAr[u-1]].length == 2) {
+            console.log("3. Shadda 2-consonant - ", textAr[u], arabicToLatin[textAr[u-1] + textAr[u-2]])
+            resultLa = resultLa + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; 
+          } else if (arabicToLatin[textAr[u-1]].length == 1) {
+            console.log("3. Shadda 1-consonant - ", textAr[u], arabicToLatin[textAr[u-1]])
+            resultLa = resultLa + resultLa[resultLa.length - 1]; 
           } else {
+            console.log("3. Shadda - ", textAr[u], arabicToLatin[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; 
           }
       } else if (((textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == " " && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == undefined) || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" && textAr[u+2] == " ") || (textAr[u-2] == "\n" && textAr[u-1] && textAr[u] != "" && textAr[u+2] == "\n") || (textAr[u-2] == undefined && textAr[u-1] && textAr[u] != "" != "" && textAr[u+2] == undefined)) && (arabicToLatin[textAr[u] + textAr[u-1]] || vowels[textAr[u] + textAr[u-1]])) { // Isolate double position 
@@ -546,11 +556,13 @@ function vocalised() {
     document.getElementById("vocalised").classList.add('vocalised');
     document.getElementById("vocalised").classList.remove('nonvocalised');
     document.getElementById("vocalised").title = "Vocalised Text in Arabic";
+    document.getElementById("arabicTab").innerText = "الْعَرَبِيَّة";
   } else if (localStorage.getItem("vocalised") == 'YES') {
     localStorage.setItem("vocalised","NO");
     document.getElementById("vocalised").classList.add('nonvocalised');
     document.getElementById("vocalised").classList.remove('vocalised');
     document.getElementById("vocalised").title = "Non-vocalised Text in Arabic";
+    document.getElementById("arabicTab").innerText = "العربية";
   }
 }
 
