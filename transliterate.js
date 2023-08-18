@@ -400,7 +400,7 @@ function transliterate() {
         resultLa = resultLa + vowels[textAr[u]];
       } else if (textAr[u] && arabicToLatin[textAr[u]]) { // Medial consonant Position
         console.log("16. Medial consonant ", textAr[u] , " : ", arabicToLatin[textAr[u]])
-        if ((textAr[u] == "ﺓ" || textAr[u] == "ة") && textAr[u+1]) {
+        if ((textAr[u] == "ﺓ" || textAr[u] == "ة") && textAr[u+1] != " ") {
           console.log("16. Medial consonant - constructus modus ", textAr[u])
           resultLa = resultLa + "t"; 
         } else if (textAr[u] == "ﺓ" || textAr[u] == "ة") {
