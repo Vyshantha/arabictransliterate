@@ -558,7 +558,7 @@ function typeOfLanguage(type) {
     transliterate();
   }
 }
-
+var vocalisedText = "";
 function vocalised() {
   if (localStorage.getItem("vocalised") == 'NO' || localStorage.getItem("vocalised") == null || localStorage.getItem("vocalised") == undefined) {
     localStorage.setItem("vocalised","YES");
@@ -566,12 +566,15 @@ function vocalised() {
     document.getElementById("vocalised").classList.remove('nonvocalised');
     document.getElementById("vocalised").title = "Vocalised Text in Arabic";
     document.getElementById("arabicTab").innerText = "الْعَرَبِيَّة";
+    document.getElementById("textarea2").value = vocalisedText;
   } else if (localStorage.getItem("vocalised") == 'YES') {
     localStorage.setItem("vocalised","NO");
     document.getElementById("vocalised").classList.add('nonvocalised');
     document.getElementById("vocalised").classList.remove('vocalised');
     document.getElementById("vocalised").title = "Non-vocalised Text in Arabic";
     document.getElementById("arabicTab").innerText = "العربية";
+    vocalisedText = document.getElementById("textarea2").value;
+    document.getElementById("textarea2").value = document.getElementById("textarea2").value.replaceAll("\uFE70","").replaceAll("\uFE71","").replaceAll("\uFE72","").replaceAll("\uFE74","").replaceAll("\u08F0","").replaceAll("\u08F1","").replaceAll("\u08F2","").replaceAll("\u064C","").replaceAll("\u064D","").replaceAll("\u064B","").replaceAll("\u08F0","").replaceAll("\u08F1","").replaceAll("\u08F2","").replaceAll("\u064E","").replaceAll("\u0618","").replaceAll("\uFE76","").replaceAll("\uFE77","").replaceAll("\u064F","").replaceAll("\u0619","").replaceAll("\uFE78","").replaceAll("\uFE79","").replaceAll("\u0650","").replaceAll("\uFE7A","").replaceAll("\uFE7B","").replaceAll("\u061A","").replaceAll("\uFE7E","").replaceAll("\u0652","");
   }
 }
 
@@ -641,7 +644,15 @@ if (screen.width >= 300 && screen.width <= 500) {
   document.getElementById("Latin").classList.add("tabcontentSmallScreen");
   document.getElementById("swapIcon").classList.remove("exchange");
   document.getElementById("swapIcon").classList.add("exchangeSmallScreen");
+  document.getElementById("dropdownIcon").classList.remove("dropdown");
+  document.getElementById("dropdownIcon").classList.add("dropdownSmall");
+  document.getElementById("arabicFontsIcons").classList.remove("arabicFonts");
+  document.getElementById("arabicFontsIcons").classList.add("arabicFontsSmall");
 } else {
   document.getElementById("swapIcon").classList.remove("exchangeSmallScreen");
   document.getElementById("swapIcon").classList.add("exchange");
+  document.getElementById("dropdownIcon").classList.add("dropdown");
+  document.getElementById("dropdownIcon").classList.remove("dropdownSmall");
+  document.getElementById("arabicFontsIcons").classList.add("arabicFonts");
+  document.getElementById("arabicFontsIcons").classList.remove("arabicFontsSmall");
 }
