@@ -140,9 +140,10 @@ function transliterate() {
   // The Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* TESTING
-    al-Azhar
     ʿAlāʾī
     Mirʾāt al-Adwār 
+    Hallal
+
   */
 
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
@@ -152,6 +153,8 @@ function transliterate() {
 
     const textVocalisation = ["\uFE70","\uFE71","\uFE72","\uFE74","\u08F0","\u08F1","\u08F2","\u064C","\u064D","\u064B"," ࣰ","ࣱ","ࣲ","\u064E","\u0618","\uFE76","\uFE77","\u064F","\u0619","\uFE78","\uFE79","\u0650","\uFE7A","\uFE7B","\u061A","◌ٰ","◌ٖ"];
     const shaddaForms = ["\uFC5E","\uFC60","\uFC61","\uFC62","\uFC63","\uFCF2","\uFCF3","\uFCF4","\uFC5F","\u0651","\uFE7D","\uFE7C"];
+
+    const nonjoining = ["ا","د","ذ","ر","ز","و"]
 
     if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Arabic") {
       const ijmesArabic = {"0":"٠","1":"١","2":"٢","3":"٣","4":"٤","5":"٥","6":"٦","7":"٧","8":"٨","9":"٩"
@@ -207,14 +210,18 @@ function transliterate() {
         console.log("2. Initial double consonant ", latinToArabic[textLa[u] + textLa[u+1]])
         resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]]; // TODO "al":"ال"
         u = u + 1;
-      } else if (textLa[u-1] && latinToArabic[textLa[u-1]] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]] && textLa[u+1] == " ") { // Final Double Character position 
-        console.log("3. Final double consonant ", latinToArabic[textLa[u-1]], latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]])
+      } else if (textLa[u-1] != " " && textLa[u-1] && latinToArabic[textLa[u-1]] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]] && textLa[u+1] == " ") { // Final Double Character position 
         if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Final shadda ") // TODO Shadda
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
           u = u + 2;
-        } else if (latinToArabic[textLa[u]] && textLa[u] != " ") {
-          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u-1]] + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]]; // TODO OT & MT "ه" is NOT final
+        } else if (latinToArabic[textLa[u]] && textLa[u] == "n" && latinToArabic[textLa[u+1]]) {
+          console.log("3. Final double consonant ", latinToArabic[textLa[u-1]], latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]])
+          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u-1]] + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]];
+          u = u + 1;  // final 'n'
+        } else if (latinToArabic[textLa[u]] && textLa[u] != " " && latinToArabic[textLa[u+1]]) {
+          console.log("3. Final double consonant ", latinToArabic[textLa[u-1]], latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]])
+          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u-1]] + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]];
           u = u + 2;
         }
       } else if (textLa[u] && textLa[u+1] && vowels[textLa[u] + textLa[u+1]] && latinVowels.indexOf(textLa[u] + textLa[u+1]) > -1) { // Vowel Double Character
@@ -244,11 +251,11 @@ function transliterate() {
       } else if ((textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) { // Final Consonant Character position 
         if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة"; // TODO based on character linking
+          resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; // TODO based on character linking
           u = u + 1;
         } else if (latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة"; // TODO based on character linking
+          resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; // TODO based on character linking
         } else if (latinToArabic[textLa[u]] && latinToArabic[textLa[u+1]]) {
           console.log("8. Final consonant ", latinToArabic[textLa[u]], latinToArabic[textLa[u+1]])
           resultAr = resultAr + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]]; // TODO OT & MT "ه" is NOT final
@@ -257,6 +264,8 @@ function transliterate() {
         console.log("9. Medial vowel ", vowels[textLa[u]])
         if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u" && textLa[u+1] != " ") { // non-vocalised short-vowel in medial position
           resultAr = resultAr + vowels[textLa[u]];
+        } else if (textLa[u] == "a" && textLa[u-1] == "-") {
+          resultAr = resultAr.slice(0, -1) + "ﻻ";
         } else if (textLa[u] == "a" && textLa[u+1] == "l") {
           resultAr = resultAr + vowels[textLa[u]];
         }
