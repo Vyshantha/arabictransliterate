@@ -142,7 +142,6 @@ function transliterate() {
   /* TESTING
     al-Azhar
     ʿAlāʾī
-    Ghurabāʾ
     Mirʾāt al-Adwār 
   */
 
@@ -156,15 +155,16 @@ function transliterate() {
 
     if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Arabic") {
       const ijmesArabic = {"0":"٠","1":"١","2":"٢","3":"٣","4":"٤","5":"٥","6":"٦","7":"٧","8":"٨","9":"٩"
-      ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","-":"","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","b":"ب","B":"ب","p":"","P":"","t":"ت","T":"ت","th":"ث","Th":"ث","ch":"","Ch":"","j":"ج","J":"ج","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","dh":"ذ","Dh":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","zh":"","Zh":"","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ḍ":"ض","Ḍ":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","g":"","G":"","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","w":"و","W":"و","y":"ي","Y":"ي","la":"ﻻ","la":"ﻼ","in":"\uFE74","In":"\uFE74","un":"\uFE72","Un":"\uFE72","an":"\uFE70","An":"\uFE70"};
-      const ijmesArabicVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","̄":"ا","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","ū":"ّوُ","Ū":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
+      ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","-":"","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","b":"ب","B":"ب","p":"","P":"","t":"ت","T":"ت","th":"ث","Th":"ث","ch":"","Ch":"","j":"ج","J":"ج","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","dh":"ذ","Dh":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ḍ":"ض","Ḍ":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","g":"","G":"","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","w":"و","W":"و","y":"ي","Y":"ي","la":"ﻻ","la":"ﻼ","in":"\uFE74","In":"\uFE74","un":"\uFE72","Un":"\uFE72","an":"\uFE70","An":"\uFE70"};
+      const ijmesArabicVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","̄":"ا","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
       // Vocalised Vowels - "a":"\u064E","A":"\u064E","u":"\u064F","U":"\u064F","i":"\u0650","I":"\u0650"
+      // ,"ū":"ّوُ","Ū":"ّوُ"
       latinToArabic = ijmesArabic;
       vowels = ijmesArabicVowels;
     } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Persian") {
       const ijmesPersian = {"0":"۰","1":"١","2":"٢","3":"٣","4":"۴","5":"۵","6":"۶","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","-":"","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","b":"ب","B":"ب","p":"پ","P":"پ","t":"ت","T":"ت","s̲":"ث","S̲":"ث","j":"ج","J":"ج","ch":"چ","Ch":"چ","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","z̲":"ذ","Z̲":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","zh":"ژ","Zh":"ژ","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ż":"ض","Ż":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","g":"ك","G":"ك","g":"گ","G":"گ","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","v":"و","V":"و","U":"و","U":"و","y":"ي","Y":"ي","in":"\uFE74","In":"\uFE74","un":"\uFE72","Un":"\uFE72","an":"\uFE70","An":"\uFE70"};
-      const ijmesPersianVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","̄":"","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","ū":"ّوُ","Ū":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
+      const ijmesPersianVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","̄":"","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
       latinToArabic = ijmesPersian;
       vowels = ijmesPersianVowels;
     } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "OttomanTurkish") {
@@ -193,11 +193,12 @@ function transliterate() {
         resultAr = resultAr + "\n";
       } else if ((textLa[u-2] == " " && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == "\n" && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == "\n" && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == undefined && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == "\n" && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == undefined && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined)) { // Isolate Double consonant position 
         console.log("1. Isolate double consonant ", textLa[u], textLa[u+1], latinToArabic[textLa[u] + textLa[u+1]])
-        if ((textLa[u] == "a" || textLa[u] == "i" || textLa[u] == "u") && textLa[u+1] == "n") {// Kasratan, Dammatan, Fathatan
+        if ((textLa[u] == "a" || textLa[u] == "i" || textLa[u] == "u") && textLa[u+1] == "n") { // Kasratan, Dammatan, Fathatan
           resultAr = resultAr + "ـن";
           u = u + 1;
         } else  if (latinToArabic[textLa[u] + textLa[u+1]]) {
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]];
+          u = u + 1;
         }
       } else if ((textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == undefined && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == undefined && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined)) { // Isolate Double vowel position 
         console.log("1. Isolate double vowel ",  textLa[u], textLa[u+1], vowels[textLa[u] + textLa[u+1]])
@@ -210,7 +211,7 @@ function transliterate() {
         console.log("3. Final double consonant ", latinToArabic[textLa[u-1]], latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]])
         if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Final shadda ") // TODO Shadda
-          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + " ّ";
+          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
           u = u + 2;
         } else if (latinToArabic[textLa[u]] && textLa[u] != " ") {
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u-1]] + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]]; // TODO OT & MT "ه" is NOT final
@@ -243,10 +244,11 @@ function transliterate() {
       } else if ((textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) { // Final Consonant Character position 
         if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة";
+          resultAr = resultAr + "ـة"; // TODO based on character linking
+          u = u + 1;
         } else if (latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة";
+          resultAr = resultAr + "ـة"; // TODO based on character linking
         } else if (latinToArabic[textLa[u]] && latinToArabic[textLa[u+1]]) {
           console.log("8. Final consonant ", latinToArabic[textLa[u]], latinToArabic[textLa[u+1]])
           resultAr = resultAr + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]]; // TODO OT & MT "ه" is NOT final
@@ -259,27 +261,22 @@ function transliterate() {
           resultAr = resultAr + vowels[textLa[u]];
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]]) { // Medial Position Consonant Character
-        if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ت") {
-          console.log("9. Medial consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة";
-        } else if (latinToArabic[textLa[u]] == "ت") {
-          console.log("9. Medial consonant ta-marbuta ", latinToArabic[textLa[u]])
-          resultAr = resultAr + "ـة" ; // "ة" based on letter connectivity
-        } else if (textLa[u-1] == "-" && textLa[u] == "l") {
+        if (textLa[u-1] == "-" && textLa[u] == "l") {
           console.log("9. Medial consonant -l- ", latinToArabic[textLa[u]])
           resultAr = resultAr + "ال";
         } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Medial consonant shadda ") // TODO Shadda
-          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + " ّ";
+          resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
         } else if (textLa[u] != " ") {
           console.log("9. Medial consonant ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
         }
       } else if ((textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) {
-        console.log("10. final vowel ", vowels[textLa[u]])
         if (textLa[u] == "ī") {
+          console.log("10. final ī ", vowels[textLa[u]])
           //resultAr = resultAr + "ی"; // TODO correct rule?
-        } else {
+        } else if (textLa[u-1] != "t") {
+          console.log("10. final vowel ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
         }
       } else if (latinToArabic[textLa[u]]) {
