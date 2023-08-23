@@ -138,23 +138,15 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    when to put the shadda ?
-    ʿAlā = different words ?
-    Majd : why is the a an alef ?
-    "ی"; // TODO correct rule?
-    al-Kashshāf when to start with waslah 
+    Show 2-forms : ukatību ukātibu uktibu uktiba āktatibu āktabtu āktubu adab
 
-    Mālaqa  , li-Umarāʾ  : m not correctly rendered 
-    allāh : NOT correctly rendered
-    U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
-  */
-  /* TEST
-    need to show 2-forms : ukatību ukātibu uktibu uktiba āktatibu āktabtu āktubu adab
-
+    ʿAlā , Mālaqa  , li-Umarāʾ , allāh 
     katābtu maktabatun mayyah
     thumā raḥimān sūʾa ẓaninn zursharīfān 
     shadda mimā fahīm fahāma al-tarjama 
     ainfijār āl-ilhāmu 
+
+    U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
 
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
@@ -182,7 +174,7 @@ function transliterate() {
     } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "Persian") {
       const ijmesPersian = {"0":"۰","1":"١","2":"٢","3":"٣","4":"۴","5":"۵","6":"۶","7":"٧","8":"٨","9":"٩"
       ," ":" ",".":"٫",",":"٬",";":"؛","?":"؟","!":"!","\"":"\"","'":"'","(":"﴿",")":"﴾",":":"؞","+":"+","=":"=","/":"؍","<":"<",">":">","*":"٭","|":"|","\\":"\\","€":"﷼","{":"{","}":"}","[":"[","]":"]","_":"_","-":"","%":"%","@":"@","ˆ":"ˆ","`":"`","´":"´","˜":"˜","·":"·","˙":"˙","¯":"¯","¨":"¨","˚":"˚","˝":"˝","ˇ":"ˇ","¸":"¸","˛":"˛","˘":"˘","’":"’","§":"؎","ʾ":"ء","b":"ب","B":"ب","p":"پ","P":"پ","t":"ت","T":"ت","s̲":"ث","S̲":"ث","j":"ج","J":"ج","ch":"چ","Ch":"چ","ḥ":"ح","Ḥ":"ح","kh":"خ","Kh":"خ","d":"د","D":"د","z̲":"ذ","Z̲":"ذ","r":"ر","R":"ر","z":"ز","Z":"ز","zh":"ژ","Zh":"ژ","s":"س","S":"س","sh":"ش","Sh":"ش","ṣ":"ص","Ṣ":"ص","ż":"ض","Ż":"ض","ṭ":"ط","Ṭ":"ط","ẓ":"ظ","Ẓ":"ظ","ʿ":"ع","gh":"غ","Gh":"غ","f":"ف","F":"ف","q":"ق","Q":"ق","k":"ك","K":"ك","g":"ك","G":"ك","g":"گ","G":"گ","l":"ل","L":"ل","m":"م","M":"م","n":"ن","N":"ن","h":"ه","H":"ه","v":"و","V":"و","U":"و","U":"و","y":"ي","Y":"ي"};
-      const ijmesPersianVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","āʾ":"ئ","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ي","Ī":"ي","ʾī":"ئي","ʾĪ":"ئي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾī":"ئي","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
+      const ijmesPersianVowels = {"a":"ا","A":"ا","i":"ا","I":"ا","u":"ا","U":"ا","ā":"ا","Ā":"ا","āʾ":"ئ","ay":"ای","Ay":"ای","ū":"و","Ū":"و","ī":"ی","Ī":"ی","ʾī":"ئي","ʾĪ":"ئي","iyy":"ّيِ","Iyy":"ّيِ","uvv":"ّوُ","Uvv":"ّوُ","au":"وَ","Au":"وَ","aw":"وَ","Aw":"وَ","ai":"یَ","Ai":"یَ","ay":"یَ","Ay":"یَ","ʾu":"أُ","ʾa":"أَ","ʾi":"إِ","ʾī":"ئي","ʾū":"ئُ","ʾu":"ؤُ","aʾ":"أْ","iʾ":"ئْ","uʾ":"ؤْ"};
       latinToArabic = ijmesPersian;
       vowels = ijmesPersianVowels;
     } else if (localStorage.getItem("transliterateType") == "IJMES" && localStorage.getItem("languageType") == "OttomanTurkish") {
@@ -293,7 +285,7 @@ function transliterate() {
           resultAr = resultAr + latinToArabic[textLa[u]] + latinToArabic[textLa[u+1]]; // TODO OT & MT "ه" is NOT final
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && textLa[u+1] != " " && vowels[textLa[u]] && latinVowels.indexOf(textLa[u]) > -1) { // Medial Position Vowel Character
-        if ((textLa[u] == "a" || textLa[u] == "i" || textLa[u] == "u") && textLa[u+1] == "n" && (textLa[u+2] == "" || textLa[u+2] == " " || textLa[u+2] == "\n" || textLa[u+2] == undefined)) { // final nunation position
+        if ((textLa[u] == "a" || textLa[u] == "u") && textLa[u+1] == "n" && (textLa[u+2] == "" || textLa[u+2] == " " || textLa[u+2] == "\n" || textLa[u+2] == undefined)) { // final nunation position
           console.log("9. Final nunation ", textLa[u], textLa[u+1])
           resultAr = resultAr;
           u = u + 1;
