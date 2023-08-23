@@ -139,8 +139,7 @@ function transliterate() {
 
   /* VALIDATION
     Show 2-forms : ukatību ukātibu uktibu uktiba āktatibu āktabtu āktubu adab
-
-    ʿAlā , Mālaqa  , li-Umarāʾ , allāh 
+    Mālaqa  , li-Umarāʾ , allāh 
     katābtu maktabatun mayyah
     thumā raḥimān sūʾa ẓaninn zursharīfān 
     shadda mimā fahīm fahāma al-tarjama 
@@ -316,11 +315,13 @@ function transliterate() {
       } else if ((textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) {
         if (textLa[u] == "ī") {
           console.log("10. final ī ", vowels[textLa[u]])
-          //resultAr = resultAr + "ی"; // TODO correct rule?
           resultAr = resultAr + vowels[textLa[u]];
         } else if (textLa[u-1] == "y" && textLa[u] == "a") {  // ta marbuta case
           console.log("10. final ta marbuta ", vowels[textLa[u]])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
+        } else if (textLa[u] == "ā") {
+          console.log("10. final vowel ā ")
+          resultAr = resultAr + "ی"; // TODO lā = لا ?
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u") {
           console.log("10. final vowel ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
