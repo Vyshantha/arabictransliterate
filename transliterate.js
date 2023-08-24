@@ -337,14 +337,8 @@ function transliterate() {
   } else if (localStorage.getItem("direction") == "arabic2latin") {
   
     /* CORRECTIONS
-      ﺍِﻧﻔِﺠَﺎﺭ
-
-      رَحِماً  زُرْشَرِيفَاً
-        
-      لِلْكَرَمْ
-
-      كَذّبَ التَرْجَمة مـَييـَه
-    
+      لِلْكَرَمْ 
+      كَذّبَ : why kadhdhaba not kadhdhba? 
     */
 
     // Arabic Unicode EXACT APPEARING letter available in multiple PLANES and that needs to be included in MAPPING 
@@ -589,7 +583,7 @@ function transliterate() {
           resultLa = resultLa.slice(0, -1) + "ā";
         } else if (vowels[textAr[u]] == "an" && vowels[textAr[u-1]] == "a") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
-          resultLa = resultLa.slice(0, -1) + "ān";
+          resultLa = resultLa.slice(0, -1) + "an"; // "ān"
         } else if (vowels[textAr[u]] == "ā" && vowels[textAr[u-1]] == "a") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ā";
@@ -599,12 +593,12 @@ function transliterate() {
         } else if (vowels[textAr[u]] == "i" && vowels[textAr[u-1]] == "ʾi") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -2) + "ʾī";
-        } else if (vowels[textAr[u]] == "i" && textAr[u-1] == "ا") {
+        } else if (vowels[textAr[u]] == "i" && (textAr[u-1] == "ا" || vowels[textAr[u-1]] == "a")) {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "i";
         } else if (vowels[textAr[u]] == "in" && vowels[textAr[u-1]] == "i") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
-          resultLa = resultLa.slice(0, -1) + "īn";
+          resultLa = resultLa.slice(0, -1) + "in"; // "īn"
         } else if (vowels[textAr[u]] == "u" && vowels[textAr[u-1]] == "u") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ū";
@@ -622,7 +616,7 @@ function transliterate() {
           resultLa = resultLa.slice(0, -1) + "ū";
         } else if (vowels[textAr[u]] == "un" && vowels[textAr[u-1]] == "u") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
-          resultLa = resultLa.slice(0, -1) + "ūn";
+          resultLa = resultLa.slice(0, -1) + "un"; // "ūn"
         } else {
           resultLa = resultLa + vowels[textAr[u]];
         }
