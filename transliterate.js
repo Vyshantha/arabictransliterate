@@ -536,7 +536,6 @@ function transliterate() {
         console.log("15. Final vowel ", textAr[u] , " : ", vowels[textAr[u]])
         resultLa = resultLa + vowels[textAr[u]];
       } else if (textAr[u] && arabicToLatin[textAr[u]]) { // Medial consonant Position
-        console.log("16. Medial consonant ", textAr[u] , " : ", arabicToLatin[textAr[u]])
         if ((textAr[u] == "ﺓ" || textAr[u] == "ة") && textAr[u+1] != " " && textAr[u+1] != "\n" && textAr[u+1] != undefined) {
           console.log("16. Medial consonant - constructus modus ", textAr[u])
           resultLa = resultLa + "t"; 
@@ -550,9 +549,10 @@ function transliterate() {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ī";
         } else {
+          console.log("16. Medial consonant ", textAr[u] , " : ", arabicToLatin[textAr[u]])
           resultLa = resultLa + arabicToLatin[textAr[u]];
         }
-        if (arabicToLatin[textAr[u]] == "l" && vowels[textAr[u-1]] == "a") {// al- 
+        if (arabicToLatin[textAr[u]] == "l" && (vowels[textAr[u-1]] == "a" || vowels[textAr[u-1]] == "i" || vowels[textAr[u-1]] == "u")) {// al- il- ul- 
           console.log("16. Medial consonant al- ", textAr[u] , " : ", arabicToLatin[textAr[u]] , vowels[textAr[u-1]])
           resultLa = resultLa + "-";
         } else if (arabicToLatin[textAr[u]] == "l" && textAr[u-1] == "ٱ") {// l- 
