@@ -336,6 +336,19 @@ function transliterate() {
     document.getElementById("textarea2").innerHTML = resultAr;
   } else if (localStorage.getItem("direction") == "arabic2latin") {
   
+    /* CORRECTIONS
+      ﺍِﻧﻔِﺠَﺎﺭ
+    
+      ثُمَّ كَتَّبْتُ كُتَّابٌ أُكَتِّبُ
+
+      رَحِماً  زُرْشَرِيفَاً
+        
+      لِلْكَرَمْ
+
+      كَذّبَ مِمَّ فَهِّمْ فَهَّمَ التَرْجَمة مـَييـَه
+    
+    */
+
     // Arabic Unicode EXACT APPEARING letter available in multiple PLANES and that needs to be included in MAPPING 
 
     let arabicToLatin;
@@ -563,9 +576,12 @@ function transliterate() {
         // ءُ followed by و = ū or ئِ followed by ي = ī or أُ followed by و = ū 
         // ا َ followed by ءْ = ā
 
-        if (vowels[textAr[u]] == "a" && vowels[textAr[u-1]] == "a") {
+        if (vowels[textAr[u]] == "a" && vowels[textAr[u-1]] == "a" && (textAr[u-1] + textAr[u]) != "أَ" && (textAr[u-1] + textAr[u]) != "ﺍَ") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -1) + "ā";
+        } else if (vowels[textAr[u]] == "a" && vowels[textAr[u-1]] == "a" && ((textAr[u-1] + textAr[u]) == "ﺍَ" || (textAr[u-1] + textAr[u]) == "أَ")) {
+          console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
+          resultLa = resultLa;
         } else if (vowels[textAr[u]] == "a" && vowels[textAr[u-1]] == "ʾa") {
           console.log("17. Medial vowel long ", textAr[u] , " : ", vowels[textAr[u]], " : ", vowels[textAr[u-1]])
           resultLa = resultLa.slice(0, -2) + "a"; // TODO Reading Flow only then ʾā 
