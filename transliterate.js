@@ -338,14 +338,12 @@ function transliterate() {
   
     /* CORRECTIONS
       ﺍِﻧﻔِﺠَﺎﺭ
-    
-      ثُمَّ كَتَّبْتُ كُتَّابٌ أُكَتِّبُ
 
       رَحِماً  زُرْشَرِيفَاً
         
       لِلْكَرَمْ
 
-      كَذّبَ مِمَّ فَهِّمْ فَهَّمَ التَرْجَمة مـَييـَه
+      كَذّبَ التَرْجَمة مـَييـَه
     
     */
 
@@ -469,7 +467,7 @@ function transliterate() {
         console.log("2. Ligature ", textAr[u], " : " , ligatures[textAr[u]] )
         resultLa = resultLa + ligatures[textAr[u]];
       } else if (textAr[u] && shaddaForms.indexOf(textAr[u]) > -1) { // Shadda rules
-          if (vowels[textAr[u-1]] == "a" && !arabicToLatin[textAr[u-1]]) {
+          /* if (vowels[textAr[u-1]] == "a" && !arabicToLatin[textAr[u-1]]) {
             console.log("3. Shadda - a long ", textAr[u], vowels[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + "ā"; 
           } else if (vowels[textAr[u-1]] == "i" && !arabicToLatin[textAr[u-1]]) {
@@ -478,13 +476,14 @@ function transliterate() {
           } else if (vowels[textAr[u-1]] == "u" && !arabicToLatin[textAr[u-1]]) {
             console.log("3. Shadda - u long ", textAr[u], vowels[textAr[u-1]])
             resultLa = resultLa.slice(0, -1) + "ū"; 
-          } else if (textVocalisation.indexOf(textAr[u-1]) > -1 && !arabicToLatin[textAr[u-1]]) {
+          } else */
+          if (textVocalisation.indexOf(textAr[u-1]) > -1 && !arabicToLatin[textAr[u-1]] && vowels[textAr[u-1]] != "a" && vowels[textAr[u-1]] != "i" && vowels[textAr[u-1]] != "u") {
             console.log("3. Shadda - vocalised ", textAr[u], textVocalisation.indexOf(textAr[u-1]))
             resultLa = resultLa + resultLa[resultLa.length - 1];
-          } else if (arabicToLatin[textAr[u-1]].length == 2) {
+          } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 2) {
             console.log("3. Shadda 2-consonant - ", textAr[u], arabicToLatin[textAr[u-1] + textAr[u-2]])
             resultLa = resultLa + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; 
-          } else if (arabicToLatin[textAr[u-1]].length == 1) {
+          } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 1) {
             console.log("3. Shadda 1-consonant - ", textAr[u], arabicToLatin[textAr[u-1]])
             resultLa = resultLa + resultLa[resultLa.length - 1]; 
           } else {
