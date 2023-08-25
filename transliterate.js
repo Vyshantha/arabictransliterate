@@ -138,12 +138,12 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    Show 2-forms : ukatību ukātibu uktibu uktiba āktatibu āktabtu āktubu adab
-    Mālaqa  , li-Umarāʾ , allāh 
-    katābtu maktabatun mayyah
-    thumā raḥimān sūʾa ẓaninn zursharīfān 
-    shadda mimā fahīm fahāma al-tarjama 
-    ainfijār āl-ilhāmu 
+    Show 2-forms : aktabtu iktatabtu aktubu ukattibu ukātibu uktibu aktatibu uktiba adab
+    Mālaqa li-Umarāʾ allāh 
+    kattabtu mayyah
+    raḥiman sūʾa ẓaninn maktabatun zursharīfan 
+    al-tarjama 
+    al-ilhāmu 
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
@@ -336,12 +336,7 @@ function transliterate() {
     document.getElementById("textarea2").innerHTML = resultAr;
   } else if (localStorage.getItem("direction") == "arabic2latin") {
   
-    /* CORRECTIONS
-      لِلْكَرَمْ 
-      كَذّبَ : why kadhdhaba not kadhdhba? 
-    */
-
-    // Arabic Unicode EXACT APPEARING letter available in multiple PLANES and that needs to be included in MAPPING 
+    // Arabic Unicode : exact appearing letter available in multiple planes and mapped here
 
     let arabicToLatin;
     let ligatures;
@@ -474,9 +469,15 @@ function transliterate() {
           if (textVocalisation.indexOf(textAr[u-1]) > -1 && !arabicToLatin[textAr[u-1]] && vowels[textAr[u-1]] != "a" && vowels[textAr[u-1]] != "i" && vowels[textAr[u-1]] != "u") {
             console.log("3. Shadda - vocalised ", textAr[u], textVocalisation.indexOf(textAr[u-1]))
             resultLa = resultLa + resultLa[resultLa.length - 1];
+          } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 2 && !arabicToLatin[textAr[u+2]] && textAr[u+2] != " ") {
+            console.log("3. Shadda 2-consonant not followed by consonant - ", textAr[u], arabicToLatin[textAr[u-1] + textAr[u-2]])
+            resultLa = resultLa + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1] + "a"; 
           } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 2) {
             console.log("3. Shadda 2-consonant - ", textAr[u], arabicToLatin[textAr[u-1] + textAr[u-2]])
             resultLa = resultLa + resultLa[resultLa.length - 2] + resultLa[resultLa.length - 1]; 
+          } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 1 && arabicToLatin[textAr[u+2]] && textAr[u+2] != " ") {
+            console.log("3. Shadda 1-consonant not followed by consonant - ", textAr[u], arabicToLatin[textAr[u-1]])
+            resultLa = resultLa + resultLa[resultLa.length - 1] + "a"; 
           } else if (arabicToLatin[textAr[u-1]] && arabicToLatin[textAr[u-1]].length == 1) {
             console.log("3. Shadda 1-consonant - ", textAr[u], arabicToLatin[textAr[u-1]])
             resultLa = resultLa + resultLa[resultLa.length - 1]; 
@@ -552,8 +553,14 @@ function transliterate() {
           console.log("16. Medial consonant ", textAr[u] , " : ", arabicToLatin[textAr[u]])
           resultLa = resultLa + arabicToLatin[textAr[u]];
         }
-        if (arabicToLatin[textAr[u]] == "l" && (vowels[textAr[u-1]] == "a" || vowels[textAr[u-1]] == "i" || vowels[textAr[u-1]] == "u")) {// al- il- ul- 
+        if (arabicToLatin[textAr[u]] == "l" && vowels[textAr[u-1]] == "a") {// al-
           console.log("16. Medial consonant al- ", textAr[u] , " : ", arabicToLatin[textAr[u]] , vowels[textAr[u-1]])
+          resultLa = resultLa + "-";
+        } else if (arabicToLatin[textAr[u]] == "l" && vowels[textAr[u-1]] == "i") { //il- 
+          console.log("16. Medial consonant il- ", textAr[u] , " : ", arabicToLatin[textAr[u]] , vowels[textAr[u-1]])
+          resultLa = resultLa + "-";
+        } else if (arabicToLatin[textAr[u]] == "l" && vowels[textAr[u-1]] == "u") { //ul- 
+          console.log("16. Medial consonant ul- ", textAr[u] , " : ", arabicToLatin[textAr[u]] , vowels[textAr[u-1]])
           resultLa = resultLa + "-";
         } else if (arabicToLatin[textAr[u]] == "l" && textAr[u-1] == "ٱ") {// l- 
           console.log("16. Medial consonant l- ", textAr[u] , " : ", arabicToLatin[textAr[u]] , vowels[textAr[u-1]])
@@ -622,6 +629,7 @@ function transliterate() {
         }
       }
     }
+    resultLa = resultLa.replaceAll(" il-"," il").replaceAll("-il-","-il").replaceAll(" ul-"," ul").replaceAll("-ul-","-ul"); // il-,ul- : when non-definite article used
     document.getElementById("textarea1").value = resultLa;
     document.getElementById("textarea1").innerHTML = resultLa;
   }
