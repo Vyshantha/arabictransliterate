@@ -139,7 +139,7 @@ function transliterate() {
 
   /* VALIDATION
     Mālaqa li-Umarāʾ allāh ḥallal al-jalal al-Mālaqī al-Ghassānī al-tarjama al-ilhāmu  wa-al-tanbīhāt
-    ẓaninn 
+
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
 
@@ -349,7 +349,11 @@ function transliterate() {
       let processed = "";
 
       for (let i = 0; i < unprocessed.length; i++) {
-        processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
+        if (unprocessed[i].indexOf("al-") > -1) {
+          processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
+        } else {
+          processed = processed + unprocessed[i] + ' ';
+        } 
       }
       resultAr = processed;
     }
