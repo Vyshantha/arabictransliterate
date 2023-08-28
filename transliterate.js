@@ -138,13 +138,8 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    Show 2-forms : aktabtu iktatabtu aktubu ukattibu ukātibu uktibu aktatibu uktiba adab
-    Mālaqa li-Umarāʾ allāh ḥallal al-jalal al-Mālaqī al-Ghassānī
-    kattabtu mayyah
-    raḥiman sūʾa ẓaninn maktabatun zursharīfan 
-    al-tarjama 
-    al-ilhāmu 
-
+    Mālaqa li-Umarāʾ allāh ḥallal al-jalal al-Mālaqī al-Ghassānī al-tarjama al-ilhāmu  wa-al-tanbīhāt
+    ẓaninn 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
 
@@ -217,7 +212,11 @@ function transliterate() {
         resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]]; 
         u = u + 1;
       } else if (textLa[u-1] != " " && textLa[u-1] && latinToArabic[textLa[u-1]] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]] && textLa[u+1] == " ") { // Final Double Character position 
-        if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
+        if (textLa[u-1] == textLa[u] && textLa[u] != " " && textLa[u-3] == "n") {
+          console.log("3. Final shadda -nann -ninn -nunn") // TODO
+          resultAr = resultAr.slice(0, -2) + latinToArabic[textLa[u]] + "ّ" + " ";
+          u = u + 1;
+        } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Final shadda ") 
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
           u = u + 2;
@@ -285,8 +284,16 @@ function transliterate() {
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && textLa[u+1] != " " && vowels[textLa[u]] && latinVowels.indexOf(textLa[u]) > -1) { // Medial Position Vowel Character
         if ((textLa[u] == "a" || textLa[u] == "u") && textLa[u+1] == "n" && (textLa[u+2] == "" || textLa[u+2] == " " || textLa[u+2] == "\n" || textLa[u+2] == undefined)) { // final nunation position
-          console.log("9. Final nunation ", textLa[u], textLa[u+1])
-          resultAr = resultAr;
+          if (textLa[u-1] == "t") {
+            console.log("9. Final nunation -tun or -tin or -tan ", textLa[u], textLa[u+1])
+            resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr + "ة" : resultAr + "ـة";
+          } else if (textLa[u] == "a") {
+            console.log("9. Final nunation -an ", textLa[u], textLa[u+1])
+            resultAr = resultAr + "اً";
+          } else {
+            console.log("9. Final nunation ", textLa[u], textLa[u+1])
+            resultAr = resultAr;
+          }
           u = u + 1;
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u" && textLa[u+1] != " " && textLa[u-1] != "ʾ") { // long-vowel in medial position
           console.log("9. Medial long vowel ", vowels[textLa[u]])
@@ -308,6 +315,10 @@ function transliterate() {
         } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Medial consonant shadda ") 
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
+        } else if (latinToArabic[textLa[u]] == "ء" && textLa[u+1] == "a") {
+          console.log("9. Medial consonant ء case ", latinToArabic[textLa[u]])
+          resultAr = resultAr + latinToArabic[textLa[u]];
+          u = u + 1;
         } else if (textLa[u] != " ") {
           console.log("9. Medial consonant ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
@@ -330,6 +341,17 @@ function transliterate() {
         console.log("10. Others ", latinToArabic[textLa[u]])
         resultAr = resultAr + latinToArabic[textLa[u]];
       }
+    }
+
+    if (textLa[0] == "a" || textLa[0] == "i" || textLa[0] == "u" || textLa.indexOf(" a") > -1 || textLa.indexOf(" i") > -1 || textLa.indexOf(" u") > -1) {
+      console.log("Multi-word suggestion when beginning with a, i , u");
+      let unprocessed = resultAr.split(" ");
+      let processed = "";
+
+      for (let i = 0; i < unprocessed.length; i++) {
+        processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
+      }
+      resultAr = processed;
     }
 
     document.getElementById("textarea2").value = resultAr;
