@@ -138,16 +138,11 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    al-tarjama Mālaqa li- Umarāʾ allāh ḥallal al-j alal al-Mālaqī al-ilhāmu  wa- al-tanbīhāt
+    al-tarjama Mālaqa li-Umarāʾ ḥallal al-jalal al-Mālaqī al-ilhāmu  wa-al-tanbīhāt
 
     -gha -ih -hi, -āh, -hū, '-yi' ends ه
-      -gha : Marāgha = مراغه
-      -hū : ḍamīrahū (X) = ضميره 
       -hi : ladayhi (X) = لديه bi-stiḥqāqihi (X) = باستحقاقه   fīhi = فيه
       -āh : ʿAbdallāh / ʿAbdillāh (X) = عبدالله ʿAllāh (X) = ٱللَّٰه    Shāh = شاه  Mubārakshāh = مباركشاه 
-      -ih : yushbih = يشبه sih = سه
-      '-yi' : Tarjuma-yi (X) = ترجمه 
-      -iya-yi : ة : Ḥāshiya-yi (X) = حاشية
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
@@ -249,6 +244,9 @@ function transliterate() {
         } else if ((textLa[u] + textLa[u+1]) == (textLa[u-2] + textLa[u-1])) {
           console.log("5. Medial double consonant shadda ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]] + "ّ";
+        } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a") {
+          console.log("5. Medial double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
+          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه";
         } else {
           console.log("5. Medial double consonant ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]];
@@ -328,6 +326,18 @@ function transliterate() {
           console.log("9. Medial consonant ء case ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
           u = u + 1;
+        } else if (textLa[u] == "h" && textLa[u+1] == "ū") {
+          console.log("9. Medial consonant -h# ", latinToArabic[textLa[u]])
+          resultAr = resultAr + latinToArabic[textLa[u]];
+          u = u + 1;
+        } else if (textLa[u] == "y" && textLa[u+1] == "i" && textLa.indexOf("ya-yi") > -1) {
+          console.log("9. Medial consonant ya-yi ", latinToArabic[textLa[u]])
+          resultAr = resultAr + "ة";
+          u = u + 1;
+        }  else if (textLa[u] == "y" && textLa[u+1] == "i") {
+          console.log("9. Medial consonant -yi ", latinToArabic[textLa[u]])
+          resultAr = resultAr + "ه";
+          u = u + 1;
         } else if (textLa[u] != " ") {
           console.log("9. Medial consonant ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
@@ -359,7 +369,7 @@ function transliterate() {
       let latinWords = textLa.split(" ");
 
       for (let i = 0; i < unprocessed.length; i++) {
-        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i].indexOf("ال ") == -1 && unprocessed[i][0] == "ا") {
+        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i][0] == "ا") {
           if (!latinWords[i].startsWith("i")) {
             console.log("word being processed a- u- ", unprocessed[i])
             processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
@@ -751,7 +761,7 @@ function vocalised() {
     document.getElementById("vocalised").title = "Non-vocalised Text in Arabic";
     document.getElementById("arabicTab").innerText = "العربية";
     vocalisedText = document.getElementById("textarea2").value;
-    document.getElementById("textarea2").value = document.getElementById("textarea2").value.replaceAll("\uFE70","").replaceAll("\uFE71","").replaceAll("\uFE72","").replaceAll("\uFE74","").replaceAll("\u08F0","").replaceAll("\u08F1","").replaceAll("\u08F2","").replaceAll("\u064C","").replaceAll("\u064D","").replaceAll("\u064B","").replaceAll("\u08F0","").replaceAll("\u08F1","").replaceAll("\u08F2","").replaceAll("\u064E","").replaceAll("\u0618","").replaceAll("\uFE76","").replaceAll("\uFE77","").replaceAll("\u064F","").replaceAll("\u0619","").replaceAll("\uFE78","").replaceAll("\uFE79","").replaceAll("\u0650","").replaceAll("\uFE7A","").replaceAll("\uFE7B","").replaceAll("\u061A","").replaceAll("\uFE7E","").replaceAll("\u0652","").replaceAll("\uFC5E","").replaceAll("\uFC60","").replaceAll("\uFC61","").replaceAll("\uFC62","").replaceAll("\uFC63","").replaceAll("\uFCF2","").replaceAll("\uFCF3","").replaceAll("\uFCF4","").replaceAll("\uFC5F","").replaceAll("\u0651","").replaceAll("\uFE7D","").replaceAll("\uFE7C","").replaceAll("\u0670","");
+    document.getElementById("textarea2").value = document.getElementById("textarea2").value.replaceAll("\uFE70","").replaceAll("\uFE71","").replaceAll("\uFE72","").replaceAll("\uFE74","").replaceAll("\u08F0","").replaceAll("\u08F1","").replaceAll("\u08F2","").replaceAll("\u064C","").replaceAll("\u064D","").replaceAll("\u064B","").replaceAll("\u064E","").replaceAll("\u0618","").replaceAll("\uFE76","").replaceAll("\uFE77","").replaceAll("\u064F","").replaceAll("\u0619","").replaceAll("\uFE78","").replaceAll("\uFE79","").replaceAll("\u0650","").replaceAll("\uFE7A","").replaceAll("\uFE7B","").replaceAll("\u061A","").replaceAll("\uFE7E","").replaceAll("\u0652","").replaceAll("\uFC5E","").replaceAll("\uFC60","").replaceAll("\uFC61","").replaceAll("\uFC62","").replaceAll("\uFC63","").replaceAll("\uFCF2","").replaceAll("\uFCF3","").replaceAll("\uFCF4","").replaceAll("\uFC5F","").replaceAll("\u0651","").replaceAll("\uFE7D","").replaceAll("\uFE7C","").replaceAll("\u0670","");
   }
 }
 
