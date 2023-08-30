@@ -349,7 +349,7 @@ function transliterate() {
       let processed = "";
 
       for (let i = 0; i < unprocessed.length; i++) {
-        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i].indexOf("ال ") == -1) {
+        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i].indexOf("ال ") == -1 && unprocessed[i][0] == "ا") {
           console.log("word being processed ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
         } else {
