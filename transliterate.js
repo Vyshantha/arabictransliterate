@@ -138,7 +138,7 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    Mālaqa li-Umarāʾ allāh ḥallal al-jalal al-Mālaqī al-Ghassānī al-tarjama al-ilhāmu  wa-al-tanbīhāt
+    Mālaqa li- Umarāʾ allāh ḥallal al-j alal al-Mālaqī al-Ghassānī al-tarjama al-ilhāmu  wa- al-tanbīhāt
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
@@ -349,9 +349,11 @@ function transliterate() {
       let processed = "";
 
       for (let i = 0; i < unprocessed.length; i++) {
-        if (unprocessed[i].indexOf("al-") > -1) {
+        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i].indexOf("ال ") == -1) {
+          console.log("word being processed ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
         } else {
+          console.log("word not processed ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ';
         } 
       }
