@@ -70,12 +70,12 @@ function transliterate() {
     Arabic : https://en.wikipedia.org/wiki/Arabic_alphabet
             https://en.wikipedia.org/wiki/Arabic_script
 
+    IJMES Standard for Arabic : 
+      https://www.cambridge.org/core/journals/international-journal-of-middle-east-studies/information/author-resources/ijmes-translation-and-transliteration-guide
+      https://www.cambridge.org/core/services/aop-file-manager/file/57d83390f6ea5a022234b400/TransChart.pdf
     Various Standardisations : https://en.wikipedia.org/wiki/Romanization_of_Arabic
-      DIN Standard for Arabic : 
-        https://en.wikipedia.org/wiki/DIN_31635
-      IJMES Standard for Arabic : 
-        https://www.cambridge.org/core/journals/international-journal-of-middle-east-studies/information/author-resources/ijmes-translation-and-transliteration-guide
-        https://www.cambridge.org/core/services/aop-file-manager/file/57d83390f6ea5a022234b400/TransChart.pdf
+    DIN Standard for Arabic : 
+      https://en.wikipedia.org/wiki/DIN_31635
   
     Ligatures Transliteration for all 4 Languages
     "al-":"ال","-l-":"ال"
@@ -138,18 +138,12 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    IJMES : al-Ījī = اليجي , correct?
-    IJMES : Ḥussayn = الحسين , wrong?
-    IJMES : Ishārāt = الإشارات , wrong?
-    IJMES : al-Qasim القسم (X) = القاسم , correct?
+    IJMES : al-Ījī  اليجي (X) = الإيجي
 
     Spacing :
       ' al-'
       '  gh-'
       '  ʿA'
-    
-    hamza seated on alef :
-      al-Maʾmūnī المءموني (X) = المأموني
 
     -ll- : 
       al-jalal الجلل
@@ -302,7 +296,7 @@ function transliterate() {
         console.log("8. Initial vowel ", vowels[textLa[u]])
         resultAr = resultAr + vowels[textLa[u]];
       } else if ((textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && latinToArabic[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) { // Final Consonant Character position 
-        if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ت") {
+        if (textLa[u-2] != "h" && textLa[u-2] != "ʾ" && textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta 'at' ", latinToArabic[textLa[u]])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
           u = u + 1;
@@ -368,10 +362,9 @@ function transliterate() {
         } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Medial consonant shadda ") 
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
-        } else if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ء" && textLa[u+1] == "a") {
+        } else if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ء") {
           console.log("9. Medial consonant aʾa case ", latinToArabic[textLa[u]])
           resultAr = resultAr + "أ";
-          u = u + 1;
         } else if (latinToArabic[textLa[u]] == "ء" && textLa[u+1] == "a") {
           console.log("9. Medial consonant ء case ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
@@ -399,7 +392,7 @@ function transliterate() {
         } else if ((textLa[u-1] == "b" || textLa[u-1] == "f" || textLa[u-1] == "l" || textLa[u-1] == "m" || textLa[u-1] == "n" || textLa[u-1] == "r" || textLa[u-1] == "q" || textLa[u-1] == "y" || textLa[u-1] == "ṣ") && textLa[u] == "a" && textLa[u+1] == " ") {  // ta marbuta case
           console.log("9. Final '-a' ta marbuta vowel case")
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
-        } else if (textLa[u] == "ā") {
+        } else if (textLa[u-1] != "h" && textLa[u] == "ā") {
           console.log("10. final vowel ā - alef maksura ")
           resultAr = resultAr + "ى";
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u") {
