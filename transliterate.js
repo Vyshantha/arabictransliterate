@@ -140,29 +140,13 @@ function transliterate() {
   /* VALIDATION
     ḥallal al-jalal al-ilhāmu li-al-Sayyid 
 
-    !nunation :
-     an اً (X) = أن
-
     -ll : 
       ʿAbdallāh / ʿAbdillāh عبدلّاه (X) = عبدالله 
       ʿAllāh علّاه (X) = ٱللَّٰه  
       alladhī اﻼذي (X) = الذي 
 
-    :al (not ligature)
-      al-Mālaqī المﻻقي (X) = المالقي
-      bi-al-Yamīnī ﻻليميني (X) = باليميني
-      wa-al-tanbīhāt ﻻلتنبيهاة (X) = والتنبيهات
-      wa-al-Mulūk ﻻلملوك (X) = والملوك
-    
-    :la (ligature ONLY with vowel)
-      li-Umarāʾ لمرا (X) = لامراء
-      
-    :la(ligature not required l-)
-      li-l-wujūd لالوجود (X) = للوجود
-      li-l-maraḍ لالمرض (X) = للمرض
-      li-l-bashariyya لالبشريّـة (X) = للبشريّة 
-
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
+    LAM + MEEM + LAM = generates لمل but in some fonts it is a wave LAM
   */
 
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
@@ -333,7 +317,11 @@ function transliterate() {
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u" && textLa[u+1] != " " && textLa[u-1] == "ʾ") { // long-vowel in medial position
           console.log("9. Medial long vowel with hamza ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u-1] + textLa[u]];
-        } else if (textLa[u] == "a" && textLa[u-1] == "-") {
+        } else if (textLa[u-1] == "-" && textLa[u] == "a" && textLa[u+1] == "l" && textLa[u+2] == "-") {
+          console.log("9. Medial '-al-' after vowel ")
+          resultAr = resultAr + "ال";
+          u = u + 2;
+        } else if (textLa[u-1] == "-" && textLa[u] == "a") {
           console.log("9. Medial 'la-' after vowel ", vowels[textLa[u]], textLa[u-1])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1 || textLa[u-1] == "-") ? resultAr.slice(0, -1) + "ﻻ" : resultAr.slice(0, -1) + "ﻼ";
         } else if (textLa[u] == "a" && textLa[u+1] == "l" && textLa[u+1] == "-" && textLa[u+2] != "ā") {
@@ -345,12 +333,18 @@ function transliterate() {
         } else if (textLa[u-1] == "m" && textLa[u] == "u" && textLa[u+1] == "q") {
           console.log("9. Medial 'muq' vowel case")
           resultAr = resultAr + "و";
+        } else if (textLa[u-1] == "-" && textLa[u] == "u") {
+          console.log("9. Medial '-u' vowel case")
+          resultAr = resultAr.slice(0, -1) + "لا";
         } else if (textLa[u-3] == "a" && textLa[u-2] == "l" && textLa[u-1] == "-" && textLa[u] == "i") {
           console.log("9. Medial 'al-i' vowel case")
           resultAr = resultAr.slice(0, -1) + "لا";
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]]) { // Medial Position Consonant Character
-        if (textLa[u-1] == "-" && textLa[u] == "l") {
+        if (textLa[u-3] == "l" && textLa[u-1] == "-" && textLa[u] == "l" && textLa[u+1] == "-") {
+          console.log("9. Medial consonant li-l- ", latinToArabic[textLa[u]])
+          resultAr = resultAr + "ل";
+        } else if (textLa[u-1] == "-" && textLa[u] == "l") {
           console.log("9. Medial consonant -l- ", latinToArabic[textLa[u]])
           resultAr = resultAr + "ال";
         } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
@@ -415,7 +409,7 @@ function transliterate() {
             console.log("word being processed i- ", unprocessed[i])
             processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","إ") + ' ';
           }
-        } else if (unprocessed[i].indexOf("الا") > -1) {
+        } else if (latinWords[i] && latinWords[i].startsWith("i") && unprocessed[i].indexOf("الا") > -1) {
           console.log("word being processed al-i ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("الا","الإ") + ' ';
         } else {
