@@ -138,9 +138,21 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    ḥallal al-jalal al-ilhāmu li-al-Sayyid 
+    IJMES : al-Ījī = اليجي , correct?
+    IJMES : Ḥussayn = الحسين , wrong?
+    IJMES : Ishārāt = الإشارات , wrong?
+    IJMES : al-Qasim القسم (X) = القاسم , correct?
 
-    -ll : 
+    Spacing :
+      ' al-'
+      '  gh-'
+      '  ʿA'
+    
+    hamza seated on alef :
+      al-Maʾmūnī المءموني (X) = المأموني
+
+    -ll- : 
+      al-jalal الجلل
       ʿAbdallāh / ʿAbdillāh عبدلّاه (X) = عبدالله 
       ʿAllāh علّاه (X) = ٱللَّٰه  
       alladhī اﻼذي (X) = الذي 
@@ -152,7 +164,7 @@ function transliterate() {
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
     let latinToArabic;
     let vowels;
-    const latinVowels = ['a','e','i','o','u','y','ā','ē','ī','ō','ū','A','E','I','O','U','Y','Ā','Ē','Ī','Ō','Ū'];
+    const latinVowels = ['a','e','i','o','u','y','ā','ē','ī','ō','ū','A','E','I','O','U','Y','Ā','Ē','Ī','Ō','Ū']; // Letters with Macron
 
     const textVocalisation = ["\uFE70","\uFE71","\uFE72","\uFE74","\u08F0","\u08F1","\u08F2","\u064C","\u064D","\u064B"," ࣰ","ࣱ","ࣲ","\u064E","\u0618","\uFE76","\uFE77","\u064F","\u0619","\uFE78","\uFE79","\u0650","\uFE7A","\uFE7B","\u061A","◌ٰ","◌ٖ"];
     const shaddaForms = ["\uFC5E","\uFC60","\uFC61","\uFC62","\uFC63","\uFCF2","\uFCF3","\uFCF4","\uFC5F","\u0651","\uFE7D","\uFE7C"];
@@ -198,6 +210,9 @@ function transliterate() {
 
     let resultAr = "";
     let textLa = document.getElementById("textarea1").value.toLowerCase();
+    // Normalising IJMES text to use default Letters with Macron and replace U+304 : COMBINING MACRON
+    textLa = textLa.replaceAll('ā','ā').replaceAll('ē','ē').replaceAll('ī','ī').replaceAll('ō','ō').replaceAll('ū','ū');
+
     for (let u = 0; u < textLa.length; u++) {
       if (textLa[u] && (textLa[u].indexOf("\n") > -1 || textLa[u] == "\n" || textLa[u] == "\u000A")) { // New Lines
         resultAr = resultAr + "\n";
@@ -239,7 +254,7 @@ function transliterate() {
         console.log("4. Final double vowel ", vowels[textLa[u] + textLa[u+1]])
         resultAr = resultAr.slice(0, -1) + vowels[textLa[u] + textLa[u+1]];
         u = u + 1;
-      } else if (textLa[u] && textLa[u+1] && latinToArabic[textLa[u] + textLa[u+1]]) { // Medial Position Double Character
+      } else if (textLa[u] && textLa[u+1] && latinToArabic[textLa[u] + textLa[u+1]] && textLa[u+2] != " ") { // Medial Position Double Character
         if((textLa[u] + textLa[u+1]) == "la" && (textLa[u+2] == "d" || textLa[u+2] == "m" || textLa[u+2] == "q")) {
           console.log("5. Medial consonant 'lam' 'lad' 'laq'")
           resultAr = resultAr + latinToArabic[textLa[u]];
@@ -339,6 +354,9 @@ function transliterate() {
         } else if (textLa[u-3] == "a" && textLa[u-2] == "l" && textLa[u-1] == "-" && textLa[u] == "i") {
           console.log("9. Medial 'al-i' vowel case")
           resultAr = resultAr.slice(0, -1) + "لا";
+        } else if (textLa[u] == "ī") {
+          console.log("9. Medial 'ī' vowel case")
+          resultAr = resultAr.slice(0, -1) + vowels[textLa[u]];
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]]) { // Medial Position Consonant Character
         if (textLa[u-3] == "l" && textLa[u-1] == "-" && textLa[u] == "l" && textLa[u+1] == "-") {
@@ -378,12 +396,12 @@ function transliterate() {
         if (textLa[u] == "ī") {
           console.log("10. final ī ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
-        } else if ((textLa[u-1] == "q" || textLa[u-1] == "m" || textLa[u-1] == "y" || textLa[u-1] == "ṣ") && textLa[u] == "a" && textLa[u+1] == " ") {  // ta marbuta case
+        } else if ((textLa[u-1] == "b" || textLa[u-1] == "f" || textLa[u-1] == "l" || textLa[u-1] == "m" || textLa[u-1] == "n" || textLa[u-1] == "r" || textLa[u-1] == "q" || textLa[u-1] == "y" || textLa[u-1] == "ṣ") && textLa[u] == "a" && textLa[u+1] == " ") {  // ta marbuta case
           console.log("9. Final '-a' ta marbuta vowel case")
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
         } else if (textLa[u] == "ā") {
-          console.log("10. final vowel ā ")
-          resultAr = resultAr + "ی"; // TODO lā = لا ?
+          console.log("10. final vowel ā - alef maksura ")
+          resultAr = resultAr + "ى";
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u") {
           console.log("10. final vowel ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
@@ -401,17 +419,17 @@ function transliterate() {
       let latinWords = textLa.split(" ");
 
       for (let i = 0; i < unprocessed.length; i++) {
-        if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i][0] == "ا") {
-          if (!latinWords[i].startsWith("i")) {
+        if (latinWords[i] && latinWords[i].startsWith("al-i") && unprocessed[i].indexOf("الا") > -1) {
+          console.log("word being processed al-i ", unprocessed[i])
+          processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("الا","الإ") + ' ';
+        } else if (unprocessed[i].indexOf("ال") == -1 && unprocessed[i][0] == "ا" && latinWords[i] && latinWords[i].indexOf("al-i") == -1) {
+          if (latinWords[i] && !latinWords[i].startsWith("i")) {
             console.log("word being processed a- u- ", unprocessed[i])
             processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","أ") + ' ';
           } else {
             console.log("word being processed i- ", unprocessed[i])
             processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","إ") + ' ';
           }
-        } else if (latinWords[i] && latinWords[i].startsWith("i") && unprocessed[i].indexOf("الا") > -1) {
-          console.log("word being processed al-i ", unprocessed[i])
-          processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("الا","الإ") + ' ';
         } else {
           console.log("word not processed ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ';
