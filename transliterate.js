@@ -138,11 +138,29 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    al-tarjama Mālaqa li-Umarāʾ ḥallal al-jalal al-Mālaqī al-ilhāmu  wa-al-tanbīhāt
+    ḥallal al-jalal al-ilhāmu li-al-Sayyid 
 
-    -gha -ih -hi, -āh, -hū, '-yi' ends ه
-      -hi : ladayhi (X) = لديه bi-stiḥqāqihi (X) = باستحقاقه   fīhi = فيه
-      -āh : ʿAbdallāh / ʿAbdillāh (X) = عبدالله ʿAllāh (X) = ٱللَّٰه    Shāh = شاه  Mubārakshāh = مباركشاه 
+    !nunation :
+     an اً (X) = أن
+
+    -ll : 
+      ʿAbdallāh / ʿAbdillāh عبدلّاه (X) = عبدالله 
+      ʿAllāh علّاه (X) = ٱللَّٰه  
+      alladhī اﻼذي (X) = الذي 
+
+    :al (not ligature)
+      al-Mālaqī المﻻقي (X) = المالقي
+      bi-al-Yamīnī ﻻليميني (X) = باليميني
+      wa-al-tanbīhāt ﻻلتنبيهاة (X) = والتنبيهات
+      wa-al-Mulūk ﻻلملوك (X) = والملوك
+    
+    :la (ligature ONLY with vowel)
+      li-Umarāʾ لمرا (X) = لامراء
+      
+    :la(ligature not required l-)
+      li-l-wujūd لالوجود (X) = للوجود
+      li-l-maraḍ لالمرض (X) = للمرض
+      li-l-bashariyya لالبشريّـة (X) = للبشريّة 
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
   */
@@ -211,7 +229,7 @@ function transliterate() {
       } else if ((textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == " " && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined) || (textLa[u-2] == undefined && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == " ") || (textLa[u-2] == "\n" && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == "\n") || (textLa[u-2] == undefined && vowels[textLa[u] + textLa[u+1]] && textLa[u+2] == undefined)) { // Isolate Double vowel position 
         console.log("1. Isolate double vowel ",  textLa[u], textLa[u+1], vowels[textLa[u] + textLa[u+1]])
         resultAr = resultAr.slice(0, -1) + vowels[textLa[u] + textLa[u+1]];
-      } else if ((textLa[u-1] == " " || textLa[u-1] == undefined || textLa[u-1] == "") && latinToArabic[textLa[u] + textLa[u+1]]) { // Initial Double Character position 
+      } else if ((textLa[u-1] == " " || textLa[u-1] == undefined || textLa[u-1] == "") && latinToArabic[textLa[u] + textLa[u+1]] && !((textLa[u] + textLa[u+1]) == "la" && (textLa[u+2] == "d" || textLa[u+2] == "m" || textLa[u+2] == "q"))) { // Initial Double Character position 
         console.log("2. Initial double consonant ", latinToArabic[textLa[u] + textLa[u+1]])
         resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]]; 
         u = u + 1;
@@ -238,20 +256,27 @@ function transliterate() {
         resultAr = resultAr.slice(0, -1) + vowels[textLa[u] + textLa[u+1]];
         u = u + 1;
       } else if (textLa[u] && textLa[u+1] && latinToArabic[textLa[u] + textLa[u+1]]) { // Medial Position Double Character
-        if (textLa[u] + textLa[u+1] == "la") {
+        if((textLa[u] + textLa[u+1]) == "la" && (textLa[u+2] == "d" || textLa[u+2] == "m" || textLa[u+2] == "q")) {
+          console.log("5. Medial consonant 'lam' 'lad' 'laq'")
+          resultAr = resultAr + latinToArabic[textLa[u]];
+          u = u + 1;
+        } else if ((textLa[u] + textLa[u+1]) == "la") {
           console.log("5. Medial double consonant 'la' ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr.slice(0, -1) + "ﻻ" : resultAr.slice(0, -1) + "ﻼ"; // TODO "l":"ال"
+          u = u + 1;
         } else if ((textLa[u] + textLa[u+1]) == (textLa[u-2] + textLa[u-1])) {
           console.log("5. Medial double consonant shadda ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]] + "ّ";
+          u = u + 1;
         } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a") {
           console.log("5. Medial double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه";
+          u = u + 1;
         } else {
           console.log("5. Medial double consonant ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]];
+          u = u + 1;
         }
-        u = u + 1;
       } else if (textLa[u] && vowels[textLa[u]] && textLa[u-1] && vowels[textLa[u-1] + textLa[u]]) { // Medial Position vowels Character
         console.log("5. Medial double vowels ", vowels[textLa[u-1] + textLa[u]])
         resultAr = resultAr.slice(0, -1) + vowels[textLa[u-1] + textLa[u]];
@@ -282,7 +307,7 @@ function transliterate() {
           console.log("8. Final consonant ta-marbuta 'at' ", latinToArabic[textLa[u]])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
           u = u + 1;
-        } else if (latinToArabic[textLa[u]] == "ت") {
+        } else if (((textLa[u-2] == "y" || textLa[u-2] == "ʾ") && textLa[u-1] == "ā") && latinToArabic[textLa[u]] == "ت") {
           console.log("8. Final consonant ta-marbuta 't' ", latinToArabic[textLa[u]])
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
         } else if (latinToArabic[textLa[u]] && latinToArabic[textLa[u+1]]) {
@@ -314,6 +339,15 @@ function transliterate() {
         } else if (textLa[u] == "a" && textLa[u+1] == "l" && textLa[u+1] == "-" && textLa[u+2] != "ā") {
           console.log("9. Medial 'al' vowel ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
+        } else if (textLa[u] == "i" && textLa[u+1] == "-" && textLa[u+2] == "s" && textLa[u+3] == "t") {
+          console.log("9. Medial 'i-st' vowel case")
+          resultAr = resultAr + vowels[textLa[u]];
+        } else if (textLa[u-1] == "m" && textLa[u] == "u" && textLa[u+1] == "q") {
+          console.log("9. Medial 'muq' vowel case")
+          resultAr = resultAr + "و";
+        } else if (textLa[u-3] == "a" && textLa[u-2] == "l" && textLa[u-1] == "-" && textLa[u] == "i") {
+          console.log("9. Medial 'al-i' vowel case")
+          resultAr = resultAr.slice(0, -1) + "لا";
         }
       } else if (textLa[u-1] && textLa[u] && textLa[u] != " " && latinToArabic[textLa[u]]) { // Medial Position Consonant Character
         if (textLa[u-1] == "-" && textLa[u] == "l") {
@@ -322,6 +356,10 @@ function transliterate() {
         } else if (textLa[u-1] == textLa[u] && textLa[u] != " ") {
           console.log("3. Medial consonant shadda ") 
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u]] + "ّ";
+        } else if (textLa[u-1] == "a" && latinToArabic[textLa[u]] == "ء" && textLa[u+1] == "a") {
+          console.log("9. Medial consonant aʾa case ", latinToArabic[textLa[u]])
+          resultAr = resultAr + "أ";
+          u = u + 1;
         } else if (latinToArabic[textLa[u]] == "ء" && textLa[u+1] == "a") {
           console.log("9. Medial consonant ء case ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
@@ -334,7 +372,7 @@ function transliterate() {
           console.log("9. Medial consonant ya-yi ", latinToArabic[textLa[u]])
           resultAr = resultAr + "ة";
           u = u + 1;
-        }  else if (textLa[u] == "y" && textLa[u+1] == "i") {
+        } else if (textLa[u] == "y" && textLa[u+1] == "i") {
           console.log("9. Medial consonant -yi ", latinToArabic[textLa[u]])
           resultAr = resultAr + "ه";
           u = u + 1;
@@ -342,12 +380,12 @@ function transliterate() {
           console.log("9. Medial consonant ", latinToArabic[textLa[u]])
           resultAr = resultAr + latinToArabic[textLa[u]];
         }
-      } else if ((textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) {
+      } else if ((textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == " ") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == "\n") || (textLa[u] && vowels[textLa[u]] && textLa[u+1] && textLa[u+1] == undefined)) { // Final Vowel position
         if (textLa[u] == "ī") {
           console.log("10. final ī ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
-        } else if (textLa[u-1] == "y" && textLa[u] == "a") {  // ta marbuta case
-          console.log("10. final ta marbuta ", vowels[textLa[u]])
+        } else if ((textLa[u-1] == "q" || textLa[u-1] == "m" || textLa[u-1] == "y" || textLa[u-1] == "ṣ") && textLa[u] == "a" && textLa[u+1] == " ") {  // ta marbuta case
+          console.log("9. Final '-a' ta marbuta vowel case")
           resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-2]]) > -1) ? resultAr + "ة" : resultAr + "ـة"; 
         } else if (textLa[u] == "ā") {
           console.log("10. final vowel ā ")
@@ -377,6 +415,9 @@ function transliterate() {
             console.log("word being processed i- ", unprocessed[i])
             processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("ا","إ") + ' ';
           }
+        } else if (unprocessed[i].indexOf("الا") > -1) {
+          console.log("word being processed al-i ", unprocessed[i])
+          processed = processed + unprocessed[i] + ' ' + unprocessed[i].replace("الا","الإ") + ' ';
         } else {
           console.log("word not processed ", unprocessed[i])
           processed = processed + unprocessed[i] + ' ';
@@ -384,6 +425,9 @@ function transliterate() {
       }
       resultAr = processed;
     }
+
+    // Clean-up extra 'kashida' / 'tatweel''
+    resultAr = resultAr.replaceAll("\u0640","");
 
     document.getElementById("textarea2").value = resultAr;
     document.getElementById("textarea2").innerHTML = resultAr;
