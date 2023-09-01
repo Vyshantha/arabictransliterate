@@ -138,23 +138,23 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    Spacing :
-      ' al-'
-      '  gh-'
-      '  ʿA'
-      '-h '
-      '-q '
-      '-at '
-      '-t '
+    Spacing : ' al-' | '  gh-' | '  ʿA' | '-h ' | '-q ' | '-at ' | '-t '
+    IJMES : araḍ ارض , fa-hādhā فهاذا , wa-hādhā وهاذا 
+    REGRESSION : Multiple a- i- u- or al-i or al-an suggestion words dont show up correctly in long texts
+      ' al-gharbī ' الغهربي (X) = الغربي
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
     LAM + MEEM + LAM = generates لمل but in some fonts it is a wave LAM
+
+    Vocalised Arabic to IJMES-Latin
+      TODO : bi-, wa-, li-, la- & wa-l-, bi-l-, li-l-, and la-l- 
   */
 
   if (localStorage.getItem("direction") == null || localStorage.getItem("direction") == undefined || localStorage.getItem("direction") == "latin2arabic") {
     let latinToArabic;
     let vowels;
-    const latinVowels = ['a','e','i','o','u','y','ā','ē','ī','ō','ū','A','E','I','O','U','Y','Ā','Ē','Ī','Ō','Ū']; // Letters with Macron
+    const latinVowels = ['a','e','i','o','u','y','ā','ē','ī','ō','ū']; // Letters with Macron
+    // 'A','E','I','O','U','Y','Ā','Ē','Ī','Ō','Ū'
 
     const textVocalisation = ["\uFE70","\uFE71","\uFE72","\uFE74","\u08F0","\u08F1","\u08F2","\u064C","\u064D","\u064B"," ࣰ","ࣱ","ࣲ","\u064E","\u0618","\uFE76","\uFE77","\u064F","\u0619","\uFE78","\uFE79","\u0650","\uFE7A","\uFE7B","\u061A","◌ٰ","◌ٖ"];
     const shaddaForms = ["\uFC5E","\uFC60","\uFC61","\uFC62","\uFC63","\uFCF2","\uFCF3","\uFCF4","\uFC5F","\u0651","\uFE7D","\uFE7C"];
@@ -200,6 +200,7 @@ function transliterate() {
 
     let resultAr = "";
     let textLa = document.getElementById("textarea1").value.toLowerCase();
+
     // Normalising IJMES text to use default Letters with Macron and replace U+304 : COMBINING MACRON
     textLa = textLa.replaceAll('ā','ā').replaceAll('ē','ē').replaceAll('ī','ī').replaceAll('ō','ō').replaceAll('ū','ū');
 
@@ -424,9 +425,9 @@ function transliterate() {
         } else if (textLa[u-1] != "h" && textLa[u-1] != "l" && textLa[u-1] != "m" && textLa[u] == "ā") {
           console.log("10. final vowel ā - alef maksura ")
           resultAr = resultAr + "ى";
-        } else if (textLa[u] != "i" && textLa[u] != "l" && textLa[u] == "ā") {
-          console.log("10. final vowel ilā ", vowels[textLa[u]])
-          resultAr = resultAr.slice(0, -2) + "الى";
+        } else if ((textLa[u-2] == "i" || textLa[u-2] == "a") && textLa[u-1] == "l" && textLa[u] == "ā") {
+          console.log("10. final vowel ilā ʿalā ", vowels[textLa[u]])
+          resultAr = resultAr + "ى";
         } else if (textLa[u] != "a" && textLa[u] != "i" && textLa[u] != "u") {
           console.log("10. final vowel ", vowels[textLa[u]])
           resultAr = resultAr + vowels[textLa[u]];
@@ -583,6 +584,10 @@ function transliterate() {
     
     let resultLa = "";
     let textAr = document.getElementById("textarea2").value;
+
+    // TODO - Normalisation of Arabic - Unicode block : U+060 to U+06F
+    // textAr = textAr
+
     for (let u = 0 ; u < textAr.length ; u++ ) {
       if (textAr[u].indexOf("\n") > -1) {
         resultLa = resultLa + "\n";
