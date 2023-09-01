@@ -141,7 +141,6 @@ function transliterate() {
     Spacing : ' al-' | '  gh-' | '  ʿA' | '-h ' | '-q ' | '-at ' | '-t '
     IJMES : araḍ ارض , fa-hādhā فهاذا , wa-hādhā وهاذا 
     REGRESSION : Multiple a- i- u- or al-i or al-an suggestion words dont show up correctly in long texts
-      ' al-gharbī ' الغهربي (X) = الغربي
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
     LAM + MEEM + LAM = generates لمل but in some fonts it is a wave LAM
@@ -275,9 +274,13 @@ function transliterate() {
           console.log("5. Medial double consonant shadda ", latinToArabic[textLa[u] + textLa[u+1]])
           resultAr = resultAr.slice(0, -1) + latinToArabic[textLa[u] + textLa[u+1]] + "ّ";
           u = u + 1;
+        } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a" && textLa[u+3] == " ") {
+          console.log("5. Final double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
+          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه";
+          u = u + 1;
         } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a") {
           console.log("5. Medial double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
-          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه";
+          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]];
           u = u + 1;
         } else {
           console.log("5. Medial double consonant ", textLa[u-1], latinToArabic[textLa[u] + textLa[u+1]])
