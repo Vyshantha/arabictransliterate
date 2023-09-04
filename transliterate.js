@@ -139,7 +139,6 @@ function transliterate() {
 
   /* VALIDATION
     Spacing : ' al-' | '  gh-' | '  ʿA' | '-h ' | '-q ' | '-at ' | '-t '
-    IJMES : araḍ ارض , fa-hādhā فهاذا , wa-hādhā وهاذا 
     REGRESSION : Multiple a- i- u- or al-i or al-an suggestion words dont show up correctly in long texts
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
@@ -276,11 +275,11 @@ function transliterate() {
           u = u + 1;
         } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a" && textLa[u+3] == " ") {
           console.log("5. Final double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
-          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه";
+          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]] + "ه"; // TODO - ch-  dh- sh- th-
           u = u + 1;
         } else if (latinToArabic[textLa[u] + textLa[u+1]] == "غ" && textLa[u+2] == "a") {
           console.log("5. Medial double consonant -gha ", latinToArabic[textLa[u] + textLa[u+1]])
-          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]];
+          resultAr = resultAr + latinToArabic[textLa[u] + textLa[u+1]];  // TODO - ch-  dh- sh- th-
           u = u + 1;
         } else {
           console.log("5. Medial double consonant ", textLa[u-1], latinToArabic[textLa[u] + textLa[u+1]])
@@ -344,6 +343,9 @@ function transliterate() {
           } else if (textLa[u-2] == "l" && textLa[u-1] == "-" && textLa[u] == "ī") {
             console.log("9. Medial long vowel al-ī ", vowels[textLa[u]])
             resultAr = resultAr.slice(0, -1) + "لإي";
+          } else if (textLa[u-2] == "-" && textLa[u-1] == "h" && textLa[u] == "ā" && textLa[u+1] == "d" && textLa[u+2] == "h") {
+            console.log("9. Medial long vowel ignore in hādh ", vowels[textLa[u]])
+            resultAr = resultAr;
           } else {
             console.log("9. Medial long vowel ", vowels[textLa[u]])
             resultAr = resultAr + vowels[textLa[u]];
