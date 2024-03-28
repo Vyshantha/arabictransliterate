@@ -138,7 +138,7 @@ function transliterate() {
   // TODO : Arabic tāʾ marbūṭa is rendered a not ah. In Persian it is ih. In Arabic iḍāfa constructions, it is rendered at: for example, thawrat 14 Tammūz. The Persian izafat is rendered -i: for example, vilāyat-i faqīh."
 
   /* VALIDATION
-    Spacing : '\nal-' | '-h ' | '-q ' | '-r '
+    Punctuations & Spacing : ' " . , : ; > < » « ‘ ’ “ ” () [] {} '\nal-' | '-h\n' | '-q\n' | '-r\n'
     REGRESSION : Multiple a- i- u- or al-i or al-an suggestion words dont show up correctly in long texts
 
     U+0644 + U+0627 != U+FEFB (lam + alef != la ligature) 
@@ -267,7 +267,7 @@ function transliterate() {
           u = u + 1;
         } else if (textLa[u-1] != "a" && (textLa[u] + textLa[u+1]) == "la") {
           console.log("5. Medial double consonant 'la' ", textLa[u-1], latinToArabic[textLa[u] + textLa[u+1]])
-          resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr.slice(0, -1) + "ﻻ" : resultAr.slice(0, -1) + "ﻼ"; 
+          resultAr = (nonjoining.indexOf(latinToArabic[textLa[u-1]]) > -1 || nonjoining.indexOf(vowels[textLa[u-1]]) > -1) ? resultAr + "ﻻ" : resultAr + "ﻼ"; 
           u = u + 1;
         } else if ((textLa[u] + textLa[u+1]) == (textLa[u-2] + textLa[u-1])) {
           console.log("5. Medial double consonant shadda ", latinToArabic[textLa[u] + textLa[u+1]])
@@ -443,7 +443,7 @@ function transliterate() {
     }
 
     if (textLa[0] == "a" || textLa[0] == "i" || textLa[0] == "u" || textLa.indexOf(" a") > -1 || textLa.indexOf(" i") > -1 || textLa.indexOf(" u") > -1) {
-      console.log("Multi-word suggestion when beginning with a, i , u");
+      console.log("Multi-word suggestion when beginning with a, i, u");
       let unprocessed = resultAr.split(" ");
       let processed = "";
       let latinWords = textLa.split(" ");
