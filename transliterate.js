@@ -775,6 +775,24 @@ function transliterate() {
         }
       }
     }
+    // Form īīaa should be īya or iyya
+    if (resultLa.indexOf("īīaa") > -1) {
+      // 
+      let unprocessed = resultLa.split(" ");
+      let processed = "";
+      let arabicWords = textAr.split(" ");
+
+      for (let i = 0; i < unprocessed.length; i++) {
+        if (arabicWords[i] && unprocessed[i].indexOf("īīaa") > -1) {
+          console.log("word being processed īīaa ", unprocessed[i])
+          processed = processed + unprocessed[i].replace("īīaa","īya") + ' ' + unprocessed[i].replace("īīaa","iyya") + ' ';
+        } else {
+          console.log("word not processed ", unprocessed[i])
+          processed = processed + unprocessed[i] + ' ';
+        } 
+      }
+      resultLa = processed;
+    }
     resultLa = resultLa.replaceAll(" il-"," il").replaceAll("-il-","-il").replaceAll(" ul-"," ul").replaceAll("-ul-","-ul"); // il-,ul- : when non-definite article used
     document.getElementById("textarea1").value = resultLa;
     document.getElementById("textarea1").innerHTML = resultLa;
