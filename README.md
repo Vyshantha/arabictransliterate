@@ -19,3 +19,7 @@ The Arabic spoken & written in ```Algeria, Bahrain, Chad, Comoros, Djibouti, Egy
 The application is yet to be perfected - "Work In Progress!" 
 
   <img src="https://github.com/Vyshantha/multiscripteditor/blob/main/editorClient/src/assets/images/keyboard_to_construct.png" data-canonical-src="https://github.com/Vyshantha/multiscripteditor/blob/main/editorClient/src/assets/images/keyboard_to_construct.png" width="100" height="80" />
+
+  
+# NPM Package 
+Available [here](https://www.npmjs.com/package/arabic-transliterate)
